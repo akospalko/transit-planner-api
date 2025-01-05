@@ -1,16 +1,16 @@
 import { Response } from "express";
 
-export interface ApiResponse<T> {
+export interface ApiResponse<T, E> {
   status: number;
-  message: string;
+  message?: string;
   data?: T;
-  error?: string;
+  error?: E;
 }
 
-function sendResponse<T>(res: Response, params: ApiResponse<T>): void {
+function sendResponse<T, E>(res: Response, params: ApiResponse<T, E>): void {
   const { status, message, data, error } = params;
 
-  const response: ApiResponse<T> = {
+  const response: ApiResponse<T, E> = {
     status,
     message,
     ...(data && { data }),
