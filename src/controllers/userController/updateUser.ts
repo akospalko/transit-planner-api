@@ -83,6 +83,17 @@ const updateEmail = errorHandlerMiddleware(
       });
     }
 
+    const existingUser = await prisma.user.findUnique({
+      where: { email },
+    });
+
+    if (existingUser) {
+      return sendResponse<null, ErrorUpdateEmail>(res, {
+        status: 400,
+        error: { email: "Email is already in use." },
+      });
+    }
+
     const isPasswordValid: boolean = await bcrypt.compare(
       currentPassword,
       user.password
