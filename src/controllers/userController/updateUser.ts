@@ -3,44 +3,16 @@ import bcrypt from "bcryptjs";
 import { prisma } from "../../../prisma/prisma";
 import errorHandlerMiddleware from "../../middleware/errorHandlerMiddleware";
 import sendResponse from "../../utility/responseHandler";
-
-export type UserUpdateEmail = {
-  email: string;
-  currentPassword: string;
-};
-
-export type UserUpdatePassword = {
-  newPassword: string;
-  currentPassword: string;
-};
-
-export type QueriedUser = {
-  id: number;
-  username: string;
-  email: string;
-  password: string;
-  token: string | null;
-  createdAt: Date;
-  verifiedAt: Date | null;
-};
-
-export type QueriedUserPassword = Pick<QueriedUser, "id" | "password">;
-
-export type ErrorUpdateEmail = {
-  general?: string;
-  email?: string;
-  currentPassword?: string;
-};
-
-export type ErrorUpdatePassword = {
-  general?: string;
-  currentPassword?: string;
-  newPassword?: string;
-};
+import {
+  QueriedUserPassword,
+  UserUpdateEmailRequestBody,
+  UserUpdatePasswordRequestBody,
+} from "../../types/userTypes";
+import { ErrorUpdateEmail, ErrorUpdatePassword } from "../../types/ErrorTypes";
 
 const updateEmail = errorHandlerMiddleware(
   async (req: Request, res: Response) => {
-    const { currentPassword, email }: UserUpdateEmail = req.body;
+    const { currentPassword, email }: UserUpdateEmailRequestBody = req.body;
     const userId: number = Number(req.params.id);
 
     if (isNaN(userId)) {
@@ -127,7 +99,8 @@ const updateEmail = errorHandlerMiddleware(
 
 const updatePassword = errorHandlerMiddleware(
   async (req: Request, res: Response) => {
-    const { currentPassword, newPassword }: UserUpdatePassword = req.body;
+    const { currentPassword, newPassword }: UserUpdatePasswordRequestBody =
+      req.body;
     const userId: number = Number(req.params.id);
 
     if (isNaN(userId)) {
