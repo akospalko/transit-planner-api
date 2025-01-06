@@ -14,7 +14,7 @@ export type UserUpdatePassword = {
   currentPassword: string;
 };
 
-export type QueriedUserType = {
+export type QueriedUser = {
   id: number;
   username: string;
   email: string;
@@ -24,13 +24,15 @@ export type QueriedUserType = {
   verifiedAt: Date | null;
 };
 
-type ErrorUpdateEmail = {
+export type QueriedUserPassword = Pick<QueriedUser, "id" | "password">;
+
+export type ErrorUpdateEmail = {
   general?: string;
   email?: string;
   currentPassword?: string;
 };
 
-type ErrorUpdatePassword = {
+export type ErrorUpdatePassword = {
   general?: string;
   currentPassword?: string;
   newPassword?: string;
@@ -68,12 +70,16 @@ const updateEmail = errorHandlerMiddleware(
     if (!currentPassword) {
       return sendResponse<null, ErrorUpdateEmail>(res, {
         status: 400,
-        error: { currentPassword: " Current password are required." },
+        error: { currentPassword: "Current password are required." },
       });
     }
 
-    const user: QueriedUserType | null = await prisma.user.findUnique({
+    const user: QueriedUserPassword | null = await prisma.user.findUnique({
       where: { id: userId },
+      select: {
+        id: true,
+        password: true,
+      },
     });
 
     if (!user) {
@@ -83,11 +89,12 @@ const updateEmail = errorHandlerMiddleware(
       });
     }
 
-    const existingUser = await prisma.user.findUnique({
-      where: { email },
-    });
+    const userExists: boolean =
+      (await prisma.user.count({
+        where: { email },
+      })) > 0;
 
-    if (existingUser) {
+    if (userExists) {
       return sendResponse<null, ErrorUpdateEmail>(res, {
         status: 400,
         error: { email: "Email is already in use." },
@@ -158,8 +165,12 @@ const updatePassword = errorHandlerMiddleware(
       });
     }
 
-    const user: QueriedUserType | null = await prisma.user.findUnique({
+    const user: QueriedUserPassword | null = await prisma.user.findUnique({
       where: { id: userId },
+      select: {
+        id: true,
+        password: true,
+      },
     });
 
     if (!user) {
