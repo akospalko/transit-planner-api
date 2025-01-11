@@ -5,7 +5,7 @@ import { TokenType } from "@prisma/client";
 
 export interface JwtPayloadAccess extends JwtPayload {
   id: number;
-  role: Role[];
+  roles: Role[];
   iat: number;
   exp: number;
 }
