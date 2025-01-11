@@ -12,6 +12,11 @@ enum Role {
   ADMIN
 }
 
+enum TokenType {
+  ACCESS
+  REFRESH
+}
+
 model User {
   id         Int      @id @default(autoincrement())
   username   String   @unique
@@ -21,4 +26,15 @@ model User {
   refreshToken String? 
   createdAt  DateTime @default(now())
   verifiedAt DateTime?
+  blacklistedTokens BlacklistedToken[]
+}
+
+model BlacklistedToken {
+  id          Int      @id @default(autoincrement())
+  token       String   @unique  // Can be accessToken or refreshToken
+  tokenType   TokenType
+  expiresAt   DateTime
+  createdAt   DateTime @default(now())
+  userId      Int
+  user        User     @relation(fields: [userId], references: [id])
 }
