@@ -23,7 +23,7 @@ export type QueriedUser = {
   username: string;
   email: string;
   password: string;
-  role: Role;
+  roles: Role[];
   refreshToken: string | null;
   createdAt: Date;
   verifiedAt: Date | null;
