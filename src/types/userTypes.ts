@@ -1,3 +1,5 @@
+import { Role } from "@prisma/client";
+
 // Request
 export type UserRegisterRequestBody = {
   username: string;
@@ -21,7 +23,8 @@ export type QueriedUser = {
   username: string;
   email: string;
   password: string;
-  token: string | null;
+  role: Role;
+  refreshToken: string | null;
   createdAt: Date;
   verifiedAt: Date | null;
 };
