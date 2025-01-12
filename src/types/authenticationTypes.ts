@@ -28,3 +28,9 @@ export interface BlacklistedRefreshToken {
 export interface AuthenticatedRequest extends Request {
   user?: JwtPayloadAccess;
 }
+
+export interface RegisterUserRequestBody {
+  username: string;
+  email: string;
+  password: string;
+}

@@ -3,21 +3,30 @@ import bcrypt from "bcryptjs";
 import { prisma } from "../../../prisma/prisma";
 import errorHandlerMiddleware from "../../middleware/errorHandlerMiddleware";
 import sendResponse from "../../utility/responseHandler";
-import { UserRegisterRequestBody } from "../../types/userTypes";
+import { RegisterUserRequestBody } from "../../types/authenticationTypes";
 import { ErrorGeneral } from "../../types/ErrorTypes";
+import { QueriedUser } from "../../types/userTypes";
 
 const registerUser = errorHandlerMiddleware(
   async (req: Request, res: Response) => {
-    const { username, email, password }: UserRegisterRequestBody = req.body;
+    const { username, email, password }: RegisterUserRequestBody = req.body;
 
-    const userExists: boolean =
-      (await prisma.user.count({
-        where: {
-          OR: [{ username }, { email }],
+    if (!username || !email || !password) {
+      return sendResponse<null, ErrorGeneral>(res, {
+        status: 400,
+        error: {
+          general: "Missing required fields: username, email, or password",
         },
-      })) > 0;
+      });
+    }
 
-    if (userExists) {
+    const existingUser: QueriedUser | null = await prisma.user.findFirst({
+      where: {
+        OR: [{ username }, { email }],
+      },
+    });
+
+    if (existingUser) {
       return sendResponse<null, ErrorGeneral>(res, {
         status: 400,
         error: { general: "User with this username or email already exists." },
@@ -26,7 +35,7 @@ const registerUser = errorHandlerMiddleware(
 
     const hashedPassword: string = await bcrypt.hash(password, 10);
 
-    const user: UserRegisterRequestBody = {
+    const user: RegisterUserRequestBody = {
       username,
       email,
       password: hashedPassword,

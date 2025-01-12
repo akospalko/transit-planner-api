@@ -1,12 +1,5 @@
 import { Role } from "@prisma/client";
 
-// Request
-export type UserRegisterRequestBody = {
-  username: string;
-  email: string;
-  password: string;
-};
-
 export type UserUpdateEmailRequestBody = {
   email: string;
   currentPassword: string;
