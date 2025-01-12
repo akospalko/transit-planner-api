@@ -3,22 +3,25 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 import errorHandlerMiddleware from "../../middleware/errorHandlerMiddleware";
 import { prisma } from "../../../prisma/prisma";
-import { QueriedUser } from "../../types/userTypes";
 import sendResponse from "../../utility/responseHandler";
+import { QueriedUser } from "../../types/userTypes";
+import { LoginRequestBody } from "../../types/authenticationTypes";
 import { ErrorGeneral } from "../../types/ErrorTypes";
 
-export type LoginRequestBody = {
-  // TODO Outsource
-  // username: string;
-  email: string;
-  password: string;
-};
-
 const login = errorHandlerMiddleware(async (req: Request, res: Response) => {
-  const { email, /* username, */ password }: LoginRequestBody = req.body; // TODO username
+  const { loginIdentifier, password }: LoginRequestBody = req.body;
 
-  const user: QueriedUser | null = await prisma.user.findUnique({
-    where: { email },
+  if (!loginIdentifier || !password) {
+    return sendResponse<null, ErrorGeneral>(res, {
+      status: 400,
+      error: { general: "Username or email, and password are required." },
+    });
+  }
+
+  const user: QueriedUser | null = await prisma.user.findFirst({
+    where: {
+      OR: [{ username: loginIdentifier }, { email: loginIdentifier }],
+    },
   });
 
   if (!user)

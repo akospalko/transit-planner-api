@@ -34,3 +34,8 @@ export interface RegisterUserRequestBody {
   email: string;
   password: string;
 }
+
+export interface LoginRequestBody {
+  loginIdentifier: string; // username or email
+  password: string;
+}
