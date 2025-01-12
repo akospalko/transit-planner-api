@@ -3,6 +3,7 @@ import * as dotenv from "dotenv";
 import userRouter from "./routes/userRouter";
 import authenticationRouter from "./routes/authenticationRouter";
 import bodyParser from "body-parser";
+import "./cron/blacklistedTokenCleanupCron";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
