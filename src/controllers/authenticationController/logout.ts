@@ -85,15 +85,6 @@ const logout = errorHandlerMiddleware(
       data: { refreshToken: null },
     });
 
-    // Cleanup expired tokens // TODO Replace with chron job cleanup
-    await prisma.blacklistedToken.deleteMany({
-      where: {
-        expiresAt: {
-          lte: new Date(),
-        },
-      },
-    });
-
     sendResponse(res, { status: 200, message: "Logged out successfully" });
   }
 );
