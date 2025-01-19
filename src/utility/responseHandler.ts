@@ -1,16 +1,10 @@
 import { Response } from "express";
+import { ApiResponse } from "../types/ApiTypes";
 
-export interface ApiResponse<T, E> {
-  status: number;
-  message?: string;
-  data?: T;
-  error?: E;
-}
-
-function sendResponse<T, E>(res: Response, params: ApiResponse<T, E>): void {
+const sendResponse = <T, F>(res: Response, params: ApiResponse<T, F>): void => {
   const { status, message, data, error } = params;
 
-  const response: ApiResponse<T, E> = {
+  const response: ApiResponse<T, F> = {
     status,
     message,
     ...(data && { data }),
@@ -18,6 +12,6 @@ function sendResponse<T, E>(res: Response, params: ApiResponse<T, E>): void {
   };
 
   res.status(status).json(response);
-}
+};
 
 export default sendResponse;
