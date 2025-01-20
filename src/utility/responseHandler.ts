@@ -7,8 +7,8 @@ const sendResponse = <T, F>(res: Response, params: ApiResponse<T, F>): void => {
   const response: ApiResponse<T, F> = {
     status,
     message,
-    ...(data && { data }),
-    ...(error && { error }),
+    ...(data && { data: structuredClone(data) }),
+    ...(error && { error: structuredClone(error) }),
   };
 
   res.status(status).json(response);
