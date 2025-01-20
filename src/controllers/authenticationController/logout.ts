@@ -9,15 +9,20 @@ import {
   JwtPayloadRefresh,
 } from "../../types/authenticationTypes";
 import { TokenType } from "../../enums/authentication";
+import { ErrorResponse } from "../../types/ApiTypes";
 
 const logout = errorHandlerMiddleware(
   async (req: AuthenticatedRequest, res: Response) => {
     const { user, body }: AuthenticatedRequest = req;
 
+    const errors: ErrorResponse<null> = {};
+
     if (!user) {
-      return sendResponse(res, {
+      errors.message = "Unauthorized";
+      return sendResponse<null, null>(res, {
         status: 401,
-        error: { general: "Unauthorized" },
+        message: "Logout failed",
+        error: errors,
       });
     }
 
@@ -29,18 +34,22 @@ const logout = errorHandlerMiddleware(
     const refreshToken: string | undefined = body.refreshToken;
 
     if (!accessToken) {
-      return sendResponse(res, {
+      errors.message = "Access token missing in the request";
+      return sendResponse<null, null>(res, {
         status: 400,
-        error: { general: "Access token missing in the request" },
+        message: "Logout failed",
+        error: errors,
       });
     }
 
     const decodedAccessToken: JwtPayloadAccess | undefined = req.user;
 
     if (!decodedAccessToken) {
-      return sendResponse(res, {
+      errors.message = "Unauthorized";
+      return sendResponse<null, null>(res, {
         status: 401,
-        error: { general: "Unauthorized" },
+        message: "Logout failed",
+        error: errors,
       });
     }
 
@@ -73,9 +82,11 @@ const logout = errorHandlerMiddleware(
           },
         });
       } catch (error) {
-        return sendResponse(res, {
+        errors.message = "Invalid refresh token";
+        return sendResponse<null, null>(res, {
           status: 400,
-          error: { general: "Invalid refresh token" },
+          message: "Logout failed",
+          error: errors,
         });
       }
     }
@@ -85,7 +96,10 @@ const logout = errorHandlerMiddleware(
       data: { refreshToken: null },
     });
 
-    sendResponse(res, { status: 200, message: "Logged out successfully" });
+    sendResponse<null, null>(res, {
+      status: 200,
+      message: "Logged out successfully",
+    });
   }
 );
 
