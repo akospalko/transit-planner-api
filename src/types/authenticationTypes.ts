@@ -29,7 +29,7 @@ export interface AuthenticatedRequest extends Request {
   user?: JwtPayloadAccess;
 }
 
-export interface RegisterUserRequestBody {
+export interface RegisterRequestBody {
   username: string;
   email: string;
   password: string;
