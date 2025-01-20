@@ -6,15 +6,23 @@ import { prisma } from "../../../prisma/prisma";
 import sendResponse from "../../utility/responseHandler";
 import { QueriedUser } from "../../types/userTypes";
 import { LoginRequestBody } from "../../types/authenticationTypes";
-import { ErrorGeneral } from "../../types/ErrorTypes";
+import {
+  ErrorResponse,
+  LoginResponseError,
+  LoginResponseData,
+} from "../../types/ApiTypes";
 
 const login = errorHandlerMiddleware(async (req: Request, res: Response) => {
   const { loginIdentifier, password }: LoginRequestBody = req.body;
 
+  const errors: ErrorResponse<LoginResponseError> = {};
+
   if (!loginIdentifier || !password) {
-    return sendResponse<null, ErrorGeneral>(res, {
+    errors.message = "Username or email, and password are required.";
+    return sendResponse<null, LoginResponseError>(res, {
       status: 400,
-      error: { general: "Username or email, and password are required." },
+      message: "Login failed",
+      error: errors,
     });
   }
 
@@ -24,22 +32,28 @@ const login = errorHandlerMiddleware(async (req: Request, res: Response) => {
     },
   });
 
-  if (!user)
-    return sendResponse<null, ErrorGeneral>(res, {
-      status: 404,
-      error: { general: "User not found" },
+  if (!user) {
+    errors.message = "Invalid credentials";
+    return sendResponse<null, LoginResponseError>(res, {
+      status: 401,
+      message: "Login failed",
+      error: errors,
     });
+  }
 
   const isPasswordValid: boolean = await bcrypt.compare(
     password,
     user.password
   );
 
-  if (!isPasswordValid)
-    return sendResponse<null, ErrorGeneral>(res, {
+  if (!isPasswordValid) {
+    errors.message = "Invalid credentials";
+    return sendResponse<null, LoginResponseError>(res, {
       status: 401,
-      error: { general: "Invalid credentials" },
+      message: "Login failed",
+      error: errors,
     });
+  }
 
   const accessTokenSecret: string | undefined = process.env.ACCESS_TOKEN_SECRET;
   const refreshTokenSecret: string | undefined =
@@ -64,7 +78,11 @@ const login = errorHandlerMiddleware(async (req: Request, res: Response) => {
     data: { refreshToken },
   });
 
-  res.json({ accessToken, refreshToken });
+  return sendResponse<LoginResponseData, null>(res, {
+    status: 200,
+    message: "Login successful",
+    data: { accessToken, refreshToken },
+  });
 });
 
 export default login;
