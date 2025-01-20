@@ -2,10 +2,10 @@ import { Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 import { prisma } from "../../prisma/prisma";
 import sendResponse from "../utility/responseHandler";
-import { ErrorGeneral } from "../types/ErrorTypes";
 import { JwtPayloadAccess } from "../types/authenticationTypes";
 import { AuthenticatedRequest } from "../types/authenticationTypes";
 import { TokenType } from "../enums/authentication";
+import { ErrorResponse } from "../types/ApiTypes";
 
 const authenticateToken = async (
   req: AuthenticatedRequest,
@@ -14,11 +14,16 @@ const authenticateToken = async (
 ) => {
   const token: string | undefined = req.headers.authorization?.split(" ")[1];
 
-  if (!token)
-    return sendResponse<null, ErrorGeneral>(res, {
+  const errors: ErrorResponse<null> = {};
+
+  if (!token) {
+    errors.message = "Unauthorized";
+    return sendResponse<null, null>(res, {
       status: 401,
-      error: { general: "Unauthorized" },
+      message: "Token authentication error",
+      error: errors,
     });
+  }
 
   try {
     const accessTokenSecret: string | undefined =
@@ -36,9 +41,11 @@ const authenticateToken = async (
     });
 
     if (blacklistedAccessToken) {
-      return sendResponse(res, {
+      errors.message = "Unauthorized";
+      return sendResponse<null, null>(res, {
         status: 401,
-        error: { general: "Access token is blacklisted" },
+        message: "Token authentication error",
+        error: errors,
       });
     }
 
@@ -46,9 +53,11 @@ const authenticateToken = async (
 
     next();
   } catch (err) {
-    return sendResponse<null, ErrorGeneral>(res, {
+    errors.message = "Invalid or expired token";
+    return sendResponse<null, null>(res, {
       status: 401,
-      error: { general: "Invalid or expired token" },
+      message: "Token authentication error",
+      error: errors,
     });
   }
 };
