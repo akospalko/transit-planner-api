@@ -6,16 +6,20 @@ import {
   JwtPayloadRefresh,
   BlacklistedRefreshToken,
 } from "../../types/authenticationTypes";
-import { ErrorGeneral } from "../../types/ErrorTypes";
 import { TokenType } from "../../enums/authentication";
+import { ErrorResponse, RefreshTokenResponseData } from "../../types/ApiTypes";
 
 const refreshToken = async (req: Request, res: Response) => {
   const refreshToken: string | undefined = req.body.refreshToken;
 
+  const errors: ErrorResponse<null> = {};
+
   if (!refreshToken) {
-    return sendResponse<null, ErrorGeneral>(res, {
+    errors.message = "Refresh token is required";
+    return sendResponse<null, null>(res, {
       status: 400,
-      error: { general: "Refresh token is required" },
+      message: "Token error",
+      error: errors,
     });
   }
 
@@ -39,18 +43,22 @@ const refreshToken = async (req: Request, res: Response) => {
       });
 
     if (blacklistedRefreshToken) {
-      return sendResponse<null, ErrorGeneral>(res, {
+      errors.message = "Refresh token is blacklisted";
+      return sendResponse<null, null>(res, {
         status: 401,
-        error: { general: "Refresh token is blacklisted" },
+        message: "Token error",
+        error: errors,
       });
     }
 
     const refreshTokenExpiration: Date = new Date(decoded.exp * 1000);
 
     if (refreshTokenExpiration < new Date()) {
-      return sendResponse<null, ErrorGeneral>(res, {
+      errors.message = "Refresh token has expired";
+      return sendResponse<null, null>(res, {
         status: 401,
-        error: { general: "Refresh token has expired" },
+        message: "Token error",
+        error: errors,
       });
     }
 
@@ -77,17 +85,20 @@ const refreshToken = async (req: Request, res: Response) => {
       },
     });
 
-    sendResponse(res, {
+    sendResponse<RefreshTokenResponseData, null>(res, {
       status: 200,
+      message: "Tokens refreshed successfully",
       data: {
         accessToken: newAccessToken,
         refreshToken: newRefreshToken,
       },
     });
   } catch (err) {
-    return sendResponse<null, ErrorGeneral>(res, {
+    errors.message = "Invalid or expired refresh token";
+    return sendResponse<null, null>(res, {
       status: 401,
-      error: { general: "Invalid or expired refresh token" },
+      message: "Token error",
+      error: errors,
     });
   }
 };
