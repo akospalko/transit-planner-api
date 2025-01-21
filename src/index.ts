@@ -1,13 +1,16 @@
 import express from "express";
+import cors from "cors";
 import * as dotenv from "dotenv";
+import bodyParser from "body-parser";
 import userRouter from "./routes/userRouter";
 import authenticationRouter from "./routes/authenticationRouter";
-import bodyParser from "body-parser";
+import allowedOrigins from "./config/allowedOrigins";
 import "./cron/blacklistedTokenCleanupCron";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+app.use(cors({ origin: allowedOrigins }));
 dotenv.config();
 
 app.use(bodyParser.json());
