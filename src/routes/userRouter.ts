@@ -34,6 +34,7 @@ userRouter.patch(
   restrictToSelf,
   updateEmail
 );
+
 userRouter.patch(
   "/:id/update-password",
   authenticateToken,
