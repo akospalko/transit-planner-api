@@ -4,7 +4,7 @@ import { AuthenticatedRequest } from "../types/authenticationTypes";
 import { ErrorResponse } from "../types/ApiTypes";
 import { Role } from "../enums/authentication";
 
-export const authorizeRoles = (allowedRoles: Role[]) => {
+const authorizeRoles = (allowedRoles: Role[]) => {
   return (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
     const userRoles: Role[] = req.user?.roles || [];
 
@@ -22,3 +22,5 @@ export const authorizeRoles = (allowedRoles: Role[]) => {
     next();
   };
 };
+
+export default authorizeRoles;
