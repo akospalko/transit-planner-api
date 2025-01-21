@@ -3,15 +3,19 @@ import { prisma } from "../../../prisma/prisma";
 import errorHandlerMiddleware from "../../middleware/errorHandlerMiddleware";
 import sendResponse from "../../utility/responseHandler";
 import { QueriedUserInsensitive } from "../../types/userTypes";
-import { ErrorGeneral } from "../../types/ErrorTypes";
+import { ErrorResponse } from "../../types/ApiTypes";
 
 const getUser = errorHandlerMiddleware(async (req: Request, res: Response) => {
   const userId: number = Number(req.params.id);
 
+  const errors: ErrorResponse<null> = {};
+
   if (isNaN(userId)) {
-    return sendResponse<null, ErrorGeneral>(res, {
+    errors.message = "Wrong user ID format.";
+    return sendResponse<null, null>(res, {
       status: 400,
-      error: { general: "Wrong user ID format." },
+      message: "Get user error",
+      error: errors,
     });
   }
 
@@ -27,9 +31,11 @@ const getUser = errorHandlerMiddleware(async (req: Request, res: Response) => {
   });
 
   if (!user) {
-    return sendResponse(res, {
+    errors.message = "Wrong user ID format.";
+    return sendResponse<null, null>(res, {
       status: 404,
-      error: { general: "Wrong user ID format." },
+      message: "Get user error",
+      error: errors,
     });
   }
 
