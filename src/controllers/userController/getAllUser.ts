@@ -9,9 +9,10 @@ const getAllUsers = errorHandlerMiddleware(
     const totalUsers: number = await prisma.user.count();
 
     if (totalUsers === 0) {
-      return sendResponse(res, {
+      return sendResponse<[], null>(res, {
         status: 200,
         message: "No users present",
+        data: [],
       });
     }
 
