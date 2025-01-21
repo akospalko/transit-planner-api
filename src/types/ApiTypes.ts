@@ -1,20 +1,3 @@
-export type ErrorGeneral = {
-  // TODO Replace with ErrorMessage -> remove
-  general: string;
-};
-
-export type ErrorUpdateEmail = {
-  general?: string;
-  email?: string;
-  currentPassword?: string;
-};
-
-export type ErrorUpdatePassword = {
-  general?: string;
-  currentPassword?: string;
-  newPassword?: string;
-};
-
 export type ErrorResponse<F> = {
   message?: string;
   fields?: F;
@@ -47,3 +30,13 @@ export interface RefreshTokenResponseData {
   accessToken: string;
   refreshToken: string;
 }
+
+export type UpdateEmailError = {
+  email?: string;
+  currentPassword?: string;
+};
+
+export type UpdatePasswordError = {
+  currentPassword?: string;
+  newPassword?: string;
+};
