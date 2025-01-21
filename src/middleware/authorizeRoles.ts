@@ -1,16 +1,16 @@
 import { Response, NextFunction } from "express";
 import sendResponse from "../utility/responseHandler";
 import { AuthenticatedRequest } from "../types/authenticationTypes";
-import { Role } from "../enums/authentication";
 import { ErrorResponse } from "../types/ApiTypes";
+import { Role } from "../enums/authentication";
 
-export const authorizeRoles = (roles: Role[]) => {
+export const authorizeRoles = (allowedRoles: Role[]) => {
   return (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
-    const userRoles: Role[] | undefined = req.user?.role;
+    const userRoles: Role[] = req.user?.roles || [];
 
     const errors: ErrorResponse<null> = {};
 
-    if (!userRoles || !roles.some((role) => userRoles.includes(role))) {
+    if (!userRoles.some((role) => allowedRoles.includes(role))) {
       errors.message = "Access denied: insufficient permissions";
       return sendResponse<null, null>(res, {
         status: 403,
