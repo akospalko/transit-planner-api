@@ -1,5 +1,5 @@
 import { Router } from "express";
-import getUser from "../controllers/userController/getUser";
+import getProfile from "../controllers/userController/getProfile";
 import getAllUsers from "../controllers/userController/getAllUser";
 import {
   updateEmail,
@@ -19,12 +19,19 @@ userRouter.get(
   getAllUsers
 );
 
+// userRouter.get(
+//   "/:id/get",
+//   authenticateToken,
+//   authorizeRoles([Role.USER, Role.ADMIN]),
+//   restrictToSelf,
+//   getUser
+// );
+
 userRouter.get(
-  "/:id/get",
+  "/profile",
   authenticateToken,
   authorizeRoles([Role.USER, Role.ADMIN]),
-  restrictToSelf,
-  getUser
+  getProfile
 );
 
 userRouter.patch(
