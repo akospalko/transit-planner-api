@@ -7,7 +7,7 @@ import {
   BlacklistedRefreshToken,
 } from "../../types/authenticationTypes";
 import { TokenType } from "../../enums/authentication";
-import { ErrorResponse, RefreshTokenResponseData } from "../../types/ApiTypes";
+import { ErrorResponse, RefreshTokenResponseData } from "../../types/apiTypes";
 
 const refreshToken = async (req: Request, res: Response) => {
   const refreshToken: string | undefined = req.body.refreshToken;

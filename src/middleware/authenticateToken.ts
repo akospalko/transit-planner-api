@@ -5,7 +5,7 @@ import sendResponse from "../utility/responseHandler";
 import { JwtPayloadAccess } from "../types/authenticationTypes";
 import { AuthenticatedRequest } from "../types/authenticationTypes";
 import { TokenType } from "../enums/authentication";
-import { ErrorResponse } from "../types/ApiTypes";
+import { ErrorResponse } from "../types/apiTypes";
 
 const authenticateToken = async (
   req: AuthenticatedRequest,

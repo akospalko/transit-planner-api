@@ -4,7 +4,7 @@ import errorHandlerMiddleware from "../../middleware/errorHandlerMiddleware";
 import sendResponse from "../../utility/responseHandler";
 import { QueriedUserInsensitive } from "../../types/userTypes";
 import { AuthenticatedRequest } from "../../types/authenticationTypes";
-import { ErrorResponse } from "../../types/ApiTypes";
+import { ErrorResponse } from "../../types/apiTypes";
 
 const getProfile = errorHandlerMiddleware(
   async (req: AuthenticatedRequest, res: Response) => {

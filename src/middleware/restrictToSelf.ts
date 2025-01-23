@@ -1,7 +1,7 @@
 import { Response, NextFunction } from "express";
 import { AuthenticatedRequest } from "../types/authenticationTypes";
 import sendResponse from "../utility/responseHandler";
-import { ErrorResponse } from "../types/ApiTypes";
+import { ErrorResponse } from "../types/apiTypes";
 
 /**
  * Middleware to restrict access to routes containing user IDs.

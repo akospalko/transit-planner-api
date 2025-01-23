@@ -1,7 +1,7 @@
 import { Response, NextFunction } from "express";
 import sendResponse from "../utility/responseHandler";
 import { AuthenticatedRequest } from "../types/authenticationTypes";
-import { ErrorResponse } from "../types/ApiTypes";
+import { ErrorResponse } from "../types/apiTypes";
 import { Role } from "../enums/authentication";
 
 const authorizeRoles = (allowedRoles: Role[]) => {

@@ -9,7 +9,7 @@ import {
   JwtPayloadRefresh,
 } from "../../types/authenticationTypes";
 import { TokenType } from "../../enums/authentication";
-import { ErrorResponse } from "../../types/ApiTypes";
+import { ErrorResponse } from "../../types/apiTypes";
 
 const logout = errorHandlerMiddleware(
   async (req: AuthenticatedRequest, res: Response) => {

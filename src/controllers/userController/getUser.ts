@@ -3,7 +3,7 @@ import { prisma } from "../../../prisma/prisma";
 import errorHandlerMiddleware from "../../middleware/errorHandlerMiddleware";
 import sendResponse from "../../utility/responseHandler";
 import { QueriedUserInsensitive } from "../../types/userTypes";
-import { ErrorResponse } from "../../types/ApiTypes";
+import { ErrorResponse } from "../../types/apiTypes";
 
 const getUser = errorHandlerMiddleware(async (req: Request, res: Response) => {
   const userId: number = Number(req.params.id);

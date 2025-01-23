@@ -5,7 +5,7 @@ import errorHandlerMiddleware from "../../middleware/errorHandlerMiddleware";
 import sendResponse from "../../utility/responseHandler";
 import { RegisterRequestBody } from "../../types/authenticationTypes";
 import { QueriedUser } from "../../types/userTypes";
-import { ErrorResponse, RegisterResponseError } from "../../types/ApiTypes";
+import { ErrorResponse, RegisterResponseError } from "../../types/apiTypes";
 
 const register = errorHandlerMiddleware(async (req: Request, res: Response) => {
   const { username, email, password }: RegisterRequestBody = req.body;

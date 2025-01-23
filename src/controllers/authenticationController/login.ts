@@ -10,7 +10,7 @@ import {
   ErrorResponse,
   LoginResponseError,
   LoginResponseData,
-} from "../../types/ApiTypes";
+} from "../../types/apiTypes";
 
 const login = errorHandlerMiddleware(async (req: Request, res: Response) => {
   const { loginIdentifier, password }: LoginRequestBody = req.body;

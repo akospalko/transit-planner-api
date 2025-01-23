@@ -12,7 +12,7 @@ import {
   ErrorResponse,
   UpdatePasswordError,
   UpdateEmailError,
-} from "../../types/ApiTypes";
+} from "../../types/apiTypes";
 
 const updateEmail = errorHandlerMiddleware(
   async (req: Request, res: Response) => {
