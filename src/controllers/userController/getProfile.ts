@@ -17,7 +17,7 @@ const getProfile = errorHandlerMiddleware(
       return sendResponse<null, null>(res, {
         status: 401,
         message: "Profile retrieval error",
-        error: { message: "User ID not found in token" },
+        error: errors,
       });
     }
 
