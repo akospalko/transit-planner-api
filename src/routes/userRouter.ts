@@ -1,6 +1,6 @@
 import { Router } from "express";
 import getProfile from "../controllers/userController/getProfile";
-import getAllUsers from "../controllers/userController/getAllUser";
+import getAllUsers from "../controllers/userController/getAllUsers";
 import {
   updateEmail,
   updatePassword,
