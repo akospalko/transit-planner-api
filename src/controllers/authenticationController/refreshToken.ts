@@ -8,10 +8,10 @@ import {
 } from "../../types/authenticationTypes";
 import { TokenType } from "../../enums/authentication";
 import { ErrorResponse, RefreshTokenResponseData } from "../../types/apiTypes";
+import { QueriedUser } from "../../types/userTypes";
 
 const refreshToken = async (req: Request, res: Response) => {
   const refreshToken: string | undefined = req.body.refreshToken;
-
   const errors: ErrorResponse<null> = {};
 
   if (!refreshToken) {
@@ -64,8 +64,23 @@ const refreshToken = async (req: Request, res: Response) => {
 
     const userId: number = decoded.id;
 
+    const user: QueriedUser | null = await prisma.user.findFirst({
+      where: {
+        id: userId,
+      },
+    });
+
+    if (!user) {
+      errors.message = "Couldn't resolve user role from token payload";
+      return sendResponse<null, null>(res, {
+        status: 401,
+        message: "Token error",
+        error: errors,
+      });
+    }
+
     const newAccessToken: string = jwt.sign(
-      { id: userId, roles: decoded.roles },
+      { id: userId, roles: user.roles },
       accessTokenSecret,
       { expiresIn: "15m" }
     );
