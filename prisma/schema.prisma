@@ -24,6 +24,8 @@ model User {
   password      String
   roles         Role[]    @default([USER])
   refreshToken  String?  
+  resetToken        String?  
+  resetTokenExp     DateTime? 
   createdAt     DateTime  @default(now())
   verifiedAt    DateTime?
   blacklistedTokens BlacklistedToken[]
