@@ -18,6 +18,8 @@ export type QueriedUser = {
   password: string;
   roles: Role[];
   refreshToken: string | null;
+  resetToken?: string | null;
+  resetTokenExp?: Date | null;
   createdAt: Date;
   verifiedAt: Date | null;
 };
