@@ -25,7 +25,6 @@ const errorHandlerMiddleware = (handler: ErrorHandlerMiddlewareParameter) => {
         message: "Internal error",
         error: errors,
       });
-      res.status(500).json({ error: `Error: ${error}` });
     }
   };
 };
