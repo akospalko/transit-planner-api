@@ -51,13 +51,18 @@ const forgotPassword = errorHandlerMiddleware(
     }
 
     // Generate token
-    const resetToken: string = crypto.randomBytes(32).toString("hex");
+    const resetTokenPlain = crypto.randomBytes(32).toString("hex");
+    const resetTokenHashed = crypto
+      .createHash("sha256")
+      .update(resetTokenPlain)
+      .digest("hex");
+
     const resetTokenExp: Date = new Date(Date.now() + 15 * 60 * 1000); // 15 min expiry
 
     // Store in DB
     await prisma.user.update({
       where: { email },
-      data: { resetToken, resetTokenExp },
+      data: { resetToken: resetTokenHashed, resetTokenExp },
     });
 
     // Send email
@@ -65,7 +70,7 @@ const forgotPassword = errorHandlerMiddleware(
     const RESET_LINK_PREFIX = isDev
       ? process.env.RESET_LINK_PREFIX_DEV
       : process.env.RESET_LINK_PREFIX_PROD;
-    const resetLink: string = `${RESET_LINK_PREFIX}/reset-password?token=${resetToken}`;
+    const resetLink: string = `${RESET_LINK_PREFIX}/reset-password?token=${resetTokenPlain}`;
 
     // TODO Set up basic email template
     try {
@@ -73,12 +78,10 @@ const forgotPassword = errorHandlerMiddleware(
         from: process.env.EMAIL_USER,
         to: email,
         subject: "Password Reset",
-        html: `
-          <p>Click the link below to reset your password:</p>
-          <a href="${resetLink}" style="display: inline-block; padding: 10px 20px; background-color: #007BFF; color: #FFF; text-decoration: none; border-radius: 5px;">Reset Password</a>
-          <p>This link is valid for 15 minutes.</p>
-          <p>
-        `,
+        text: `Click the link below to reset your password:\n${resetLink}\n\nThis link is valid for 15 minutes.`,
+        html: `<p>Click the link below to reset your password:</p>
+               <a href="${resetLink}" style="display: inline-block; padding: 10px 20px; background-color: #007BFF; color: #FFF; text-decoration: none; border-radius: 5px;">Reset Password</a>
+               <p>This link is valid for 15 minutes.</p>`,
       });
     } catch (error) {
       return sendResponse<null, null>(res, {
