@@ -1,4 +1,3 @@
-// TODO Typing
 import { Request, Response } from "express";
 import crypto from "crypto";
 import nodemailer from "nodemailer";
@@ -8,7 +7,6 @@ import { QueriedUser } from "../../types/userTypes";
 import { ErrorResponse } from "../../types/apiTypes";
 import sendResponse from "../../utility/responseHandler";
 
-// TODO Outsource -  Nodemailer configuration
 const transporter = nodemailer.createTransport({
   service: process.env.EMAIL_SERVICE,
   auth: {
@@ -42,10 +40,10 @@ const forgotPassword = errorHandlerMiddleware(
     });
 
     if (!user) {
-      errors.message = "User not found"; // TODO Replace with a more ambigous info -> success -> email is sent to email if existing...
+      errors.message = "If the email exists, a reset link has been sent.";
       return sendResponse<null, null>(res, {
-        status: 404,
-        message: "Request new password failed",
+        status: 200,
+        message: "Request new password successful",
         error: errors,
       });
     }
@@ -66,13 +64,8 @@ const forgotPassword = errorHandlerMiddleware(
     });
 
     // Send email
-    const isDev = process.env.NODE_ENV === "development";
-    const RESET_LINK_PREFIX = isDev
-      ? process.env.RESET_LINK_PREFIX_DEV
-      : process.env.RESET_LINK_PREFIX_PROD;
-    const resetLink: string = `${RESET_LINK_PREFIX}/reset-password?token=${resetTokenPlain}`;
+    const resetLink: string = `${process.env.FRONTEND_APP_URL}/reset-password?token=${resetTokenPlain}`;
 
-    // TODO Set up basic email template
     try {
       await transporter.sendMail({
         from: process.env.EMAIL_USER,
