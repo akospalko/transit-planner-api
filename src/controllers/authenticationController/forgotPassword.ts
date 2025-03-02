@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import crypto from "crypto";
 import nodemailer from "nodemailer";
-import { prisma } from "../../../prisma/prisma";
+import { prisma } from "../../prisma/prisma";
 import errorHandlerMiddleware from "../../middleware/errorHandlerMiddleware";
 import { QueriedUser } from "../../types/userTypes";
 import { ErrorResponse } from "../../types/apiTypes";

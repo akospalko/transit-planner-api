@@ -1,6 +1,6 @@
 import { Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
-import { prisma } from "../../prisma/prisma";
+import { prisma } from "../prisma/prisma";
 import sendResponse from "../utility/responseHandler";
 import { JwtPayloadAccess } from "../types/authenticationTypes";
 import { AuthenticatedRequest } from "../types/authenticationTypes";

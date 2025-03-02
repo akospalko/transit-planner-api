@@ -1,5 +1,5 @@
 import { Response } from "express";
-import { prisma } from "../../../prisma/prisma";
+import { prisma } from "../../prisma/prisma";
 import errorHandlerMiddleware from "../../middleware/errorHandlerMiddleware";
 import sendResponse from "../../utility/responseHandler";
 import { QueriedUserInsensitive } from "../../types/userTypes";
