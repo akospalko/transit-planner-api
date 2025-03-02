@@ -10,7 +10,11 @@
     "forceConsistentCasingInFileNames": true, // Ensure consistent casing in file names
     "typeRoots": ["./src/types", "./node_modules/@types"], // Specify type roots
     "moduleResolution": "node", // Use Node.js module resolution
-    "resolveJsonModule": true // Enable importing JSON files
+    "resolveJsonModule": true, // Enable importing JSON files
+    "baseUrl": "./src", // Set the base path for module resolution
+    "paths": {
+      "*": ["node_modules/*", "src/types/*"] // Resolve from 'src/types' as well
+    }
   },
   "include": ["src/**/*"], // Include all files in the src directory
   "exclude": ["node_modules"] // Exclude node_modules from compilation
