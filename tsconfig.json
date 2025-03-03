@@ -16,6 +16,6 @@
       "@prisma/*": ["prisma/*"] // Allow importing from `prisma/`
     }
   },
-  "include": ["src", "prisma"], // Include `prisma/`
+  "include": ["src", "prisma", "types"], // Include `prisma/`
   "exclude": ["node_modules"]
 }
