@@ -13,9 +13,10 @@
     "resolveJsonModule": true,
     "baseUrl": "./",
     "paths": {
+      "@types/*": ["src/types/*"],
       "@prisma/*": ["prisma/*"]
     }
   },
-  "include": ["src", "prisma", "types"],
-  "exclude": ["node_modules"]
+  "include": ["src/**/*", "prisma/**/*"],
+  "exclude": ["node_modules, dist"]
 }
