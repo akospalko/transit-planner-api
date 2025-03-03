@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import jwt from "jsonwebtoken";
-import { prisma } from "../../prisma/prisma";
+import { prisma } from "../../../prisma/prisma";
 import sendResponse from "../../utility/responseHandler";
 import {
   JwtPayloadRefresh,

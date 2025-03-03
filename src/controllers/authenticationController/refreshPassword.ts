@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import bcrypt from "bcryptjs";
 import crypto from "crypto";
-import { prisma } from "../../prisma/prisma";
+import { prisma } from "../../../prisma/prisma";
 import errorHandlerMiddleware from "../../middleware/errorHandlerMiddleware";
 import sendResponse from "../../utility/responseHandler";
 import { ErrorResponse } from "../../types/apiTypes";

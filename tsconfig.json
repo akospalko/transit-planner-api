@@ -1,21 +1,21 @@
 {
   "compilerOptions": {
-    "target": "es2016", // Target ES2016 for compatibility
-    "module": "commonjs", // Use CommonJS modules
-    "outDir": "./dist", // Output directory for compiled files
-    "rootDir": "./src", // Root directory for source files
-    "strict": true, // Enable strict type-checking
-    "esModuleInterop": true, // Enable ES module interop
-    "skipLibCheck": true, // Skip type-checking for .d.ts files
-    "forceConsistentCasingInFileNames": true, // Ensure consistent casing in file names
-    "typeRoots": ["./src/types", "./node_modules/@types"], // Specify type roots
-    "moduleResolution": "node", // Use Node.js module resolution
-    "resolveJsonModule": true, // Enable importing JSON files
-    "baseUrl": "./src", // Set the base path for module resolution
+    "target": "es2016",
+    "module": "commonjs",
+    "outDir": "./dist",
+    "rootDir": ".", // Change this to allow compiling from both `src/` and `prisma/`
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "typeRoots": ["./src/types", "./node_modules/@types"],
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "baseUrl": "./",
     "paths": {
-      "*": ["node_modules/*", "src/types/*"] // Resolve from 'src/types' as well
+      "@prisma/*": ["prisma/*"] // Allow importing from `prisma/`
     }
   },
-  "include": ["src/**/*"], // Include all files in the src directory
-  "exclude": ["node_modules"] // Exclude node_modules from compilation
+  "include": ["src", "prisma"], // Include `prisma/`
+  "exclude": ["node_modules"]
 }

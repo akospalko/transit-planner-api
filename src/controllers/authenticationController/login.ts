@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 import errorHandlerMiddleware from "../../middleware/errorHandlerMiddleware";
-import { prisma } from "../../prisma/prisma";
+import { prisma } from "../../../prisma/prisma";
 import sendResponse from "../../utility/responseHandler";
 import { QueriedUser } from "../../types/userTypes";
 import { LoginRequestBody } from "../../types/authenticationTypes";
