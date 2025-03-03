@@ -1,9 +1,9 @@
 {
   "compilerOptions": {
-    "target": "es2016",
-    "module": "commonjs",
+    "target": "ES6",
+    "module": "ES6",
     "outDir": "./dist",
-    "rootDir": ".", // Change this to allow compiling from both `src/` and `prisma/`
+    "rootDir": ".",
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
@@ -13,9 +13,9 @@
     "resolveJsonModule": true,
     "baseUrl": "./",
     "paths": {
-      "@prisma/*": ["prisma/*"] // Allow importing from `prisma/`
+      "@prisma/*": ["prisma/*"]
     }
   },
-  "include": ["src", "prisma", "types"], // Include `prisma/`
+  "include": ["src", "prisma", "types"],
   "exclude": ["node_modules"]
 }
