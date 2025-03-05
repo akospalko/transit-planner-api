@@ -11,13 +11,6 @@
     "resolveJsonModule": true,
     "baseUrl": "./",
     "paths": {
-      "@types/*": ["src/types/*"],
-      "@enums/*": ["src/enums/*"],
-      "@middleware/*": ["src/middleware/*"],
-      "@controllers/*": ["src/controllers/*"],
-      "@routes/*": ["src/routes/*"],
-      "@config/*": ["src/config/*"],
-      "@utility/*": ["src/utility/*"],
       "@src/*": ["src/*"],
       "@prisma-instance/*": ["prisma/*"]
     }
