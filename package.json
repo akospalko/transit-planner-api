@@ -5,10 +5,10 @@
   "type": "module",
   "main": "dist/index.js",
   "scripts": {
+    "dev": "nodemon --watch src --exec tsx src/index.ts",
     "build": "tsc",
     "postinstall": "prisma generate",
-    "start": "node dist/index.js",
-    "dev": "nodemon --exec ts-node --loader ts-node/esm src/index.ts"
+    "start": "node dist/index.js"
   },
   "dependencies": {
     "@prisma/client": "^6.1.0",
@@ -31,7 +31,7 @@
     "@types/nodemailer": "^6.4.17",
     "nodemon": "^3.1.9",
     "prisma": "^6.1.0",
-    "ts-node": "^10.9.2",
+    "tsx": "^4.19.3",
     "typescript": "^5.7.3"
   }
 }
