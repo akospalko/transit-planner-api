@@ -1,11 +1,11 @@
 import { Router } from "express";
-import register from "../controllers/authenticationController/register";
-import login from "../controllers/authenticationController/login";
-import logout from "../controllers/authenticationController/logout";
-import refreshToken from "../controllers/authenticationController/refreshToken";
-import forgotPassword from "../controllers/authenticationController/forgotPassword";
-import refreshPassword from "../controllers/authenticationController/refreshPassword";
-import authenticateToken from "../middleware/authenticateToken";
+import authenticateToken from "@src/middleware/authenticateToken";
+import register from "@src/controllers/authenticationController/register";
+import login from "@src/controllers/authenticationController/login";
+import logout from "@src/controllers/authenticationController/logout";
+import refreshToken from "@src/controllers/authenticationController/refreshToken";
+import forgotPassword from "@src/controllers/authenticationController/forgotPassword";
+import refreshPassword from "@src/controllers/authenticationController/refreshPassword";
 
 const authenticationRouter: Router = Router();
 

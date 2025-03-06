@@ -2,10 +2,10 @@ import { Request, Response } from "express";
 import crypto from "crypto";
 import nodemailer from "nodemailer";
 import { prisma } from "@prisma-instance/prisma";
-import errorHandlerMiddleware from "../../middleware/errorHandlerMiddleware";
-import { QueriedUser } from "../../types/userTypes";
-import { ErrorResponse } from "../../types/apiTypes";
-import sendResponse from "../../utility/responseHandler";
+import errorHandlerMiddleware from "@src/middleware/errorHandlerMiddleware";
+import sendResponse from "@src/utility/responseHandler";
+import { QueriedUser } from "@src/types/userTypes";
+import { ErrorResponse } from "@src/types/apiTypes";
 
 const transporter = nodemailer.createTransport({
   service: process.env.EMAIL_SERVICE,

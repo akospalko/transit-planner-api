@@ -1,14 +1,14 @@
 import { Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import { prisma } from "@prisma-instance/prisma";
-import sendResponse from "../../utility/responseHandler";
+import sendResponse from "@src/utility/responseHandler";
 import {
   JwtPayloadRefresh,
   BlacklistedRefreshToken,
-} from "../../types/authenticationTypes";
-import { TokenType } from "../../enums/authentication";
-import { ErrorResponse, RefreshTokenResponseData } from "../../types/apiTypes";
-import { QueriedUser } from "../../types/userTypes";
+} from "@src/types/authenticationTypes";
+import { TokenType } from "@src/enums/authentication";
+import { ErrorResponse, RefreshTokenResponseData } from "@src/types/apiTypes";
+import { QueriedUser } from "@src/types/userTypes";
 
 const refreshToken = async (req: Request, res: Response) => {
   const refreshToken: string | undefined = req.body.refreshToken;

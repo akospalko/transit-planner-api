@@ -1,7 +1,7 @@
 import { Request } from "express";
 import { JwtPayload } from "jsonwebtoken";
-import { Role } from "../enums/authentication";
 import { TokenType } from "@prisma/client";
+import { Role } from "@src/enums/authentication";
 
 export interface JwtPayloadAccess extends JwtPayload {
   id: number;

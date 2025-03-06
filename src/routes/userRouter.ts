@@ -1,14 +1,14 @@
 import { Router } from "express";
-import getProfile from "../controllers/userController/getProfile";
-import getAllUsers from "../controllers/userController/getAllUsers";
+import authorizeRoles from "@src/middleware/authorizeRoles";
+import authenticateToken from "@src/middleware/authenticateToken";
+import restrictToSelf from "@src/middleware/restrictToSelf";
+import getProfile from "@src/controllers/userController/getProfile";
+import getAllUsers from "@src/controllers/userController/getAllUsers";
 import {
   updateEmail,
   updatePassword,
-} from "../controllers/userController/updateUser";
-import { Role } from "../enums/authentication";
-import authorizeRoles from "../middleware/authorizeRoles";
-import authenticateToken from "../middleware/authenticateToken";
-import restrictToSelf from "../middleware/restrictToSelf";
+} from "@src/controllers/userController/updateUser";
+import { Role } from "@src/enums/authentication";
 
 const userRouter: Router = Router();
 

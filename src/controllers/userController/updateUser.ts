@@ -1,18 +1,18 @@
 import { Request, Response } from "express";
 import bcrypt from "bcryptjs";
 import { prisma } from "@prisma-instance/prisma";
-import errorHandlerMiddleware from "../../middleware/errorHandlerMiddleware";
-import sendResponse from "../../utility/responseHandler";
+import sendResponse from "@src/utility/responseHandler";
+import errorHandlerMiddleware from "@src/middleware/errorHandlerMiddleware";
 import {
   QueriedUserPassword,
   UserUpdateEmailRequestBody,
   UserUpdatePasswordRequestBody,
-} from "../../types/userTypes";
+} from "@src/types/userTypes";
 import {
   ErrorResponse,
   UpdatePasswordError,
   UpdateEmailError,
-} from "../../types/apiTypes";
+} from "@src/types/apiTypes";
 
 const updateEmail = errorHandlerMiddleware(
   async (req: Request, res: Response) => {

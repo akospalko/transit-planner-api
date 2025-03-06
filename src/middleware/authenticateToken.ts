@@ -1,11 +1,13 @@
 import { Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 import { prisma } from "@prisma-instance/prisma";
-import sendResponse from "../utility/responseHandler";
-import { JwtPayloadAccess } from "../types/authenticationTypes";
-import { AuthenticatedRequest } from "../types/authenticationTypes";
-import { TokenType } from "../enums/authentication";
-import { ErrorResponse } from "../types/apiTypes";
+import sendResponse from "@src/utility/responseHandler";
+import {
+  JwtPayloadAccess,
+  AuthenticatedRequest,
+} from "@src/types/authenticationTypes";
+import { ErrorResponse } from "@src/types/apiTypes";
+import { TokenType } from "@src/enums/authentication";
 
 const authenticateToken = async (
   req: AuthenticatedRequest,

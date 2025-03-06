@@ -1,11 +1,11 @@
 import { Request, Response } from "express";
 import bcrypt from "bcryptjs";
 import { prisma } from "@prisma-instance/prisma";
-import errorHandlerMiddleware from "../../middleware/errorHandlerMiddleware";
-import sendResponse from "../../utility/responseHandler";
-import { RegisterRequestBody } from "../../types/authenticationTypes";
-import { QueriedUser } from "../../types/userTypes";
-import { ErrorResponse, RegisterResponseError } from "../../types/apiTypes";
+import errorHandlerMiddleware from "@src/middleware/errorHandlerMiddleware";
+import sendResponse from "@src/utility/responseHandler";
+import { RegisterRequestBody } from "@src/types/authenticationTypes";
+import { QueriedUser } from "@src/types/userTypes";
+import { ErrorResponse, RegisterResponseError } from "@src/types/apiTypes";
 
 const register = errorHandlerMiddleware(async (req: Request, res: Response) => {
   const { username, email, password }: RegisterRequestBody = req.body;

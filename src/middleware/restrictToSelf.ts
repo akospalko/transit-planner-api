@@ -1,12 +1,8 @@
 import { Response, NextFunction } from "express";
-import { AuthenticatedRequest } from "../types/authenticationTypes";
-import sendResponse from "../utility/responseHandler";
-import { ErrorResponse } from "../types/apiTypes";
+import sendResponse from "@src/utility/responseHandler";
+import { AuthenticatedRequest } from "@src/types/authenticationTypes";
+import { ErrorResponse } from "@src/types/apiTypes";
 
-/**
- * Middleware to restrict access to routes containing user IDs.
- * Ensures the authenticated user can only perform actions on their own data.
- */
 const restrictToSelf = (
   req: AuthenticatedRequest,
   res: Response,

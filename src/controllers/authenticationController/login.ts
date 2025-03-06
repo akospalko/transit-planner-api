@@ -1,16 +1,16 @@
 import { Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
-import errorHandlerMiddleware from "../../middleware/errorHandlerMiddleware";
 import { prisma } from "@prisma-instance/prisma";
-import sendResponse from "../../utility/responseHandler";
-import { QueriedUser } from "../../types/userTypes";
-import { LoginRequestBody } from "../../types/authenticationTypes";
+import errorHandlerMiddleware from "@src/middleware/errorHandlerMiddleware";
+import sendResponse from "@src/utility/responseHandler";
+import { QueriedUser } from "@src/types/userTypes";
+import { LoginRequestBody } from "@src/types/authenticationTypes";
 import {
   ErrorResponse,
   LoginResponseError,
   LoginResponseData,
-} from "../../types/apiTypes";
+} from "@src/types/apiTypes";
 
 const login = errorHandlerMiddleware(async (req: Request, res: Response) => {
   const { loginIdentifier, password }: LoginRequestBody = req.body;

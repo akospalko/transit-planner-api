@@ -2,10 +2,10 @@ import { Request, Response } from "express";
 import bcrypt from "bcryptjs";
 import crypto from "crypto";
 import { prisma } from "@prisma-instance/prisma";
-import errorHandlerMiddleware from "../../middleware/errorHandlerMiddleware";
-import sendResponse from "../../utility/responseHandler";
-import { ErrorResponse } from "../../types/apiTypes";
-import { QueriedUser } from "../../types/userTypes";
+import errorHandlerMiddleware from "@src/middleware/errorHandlerMiddleware";
+import sendResponse from "@src/utility/responseHandler";
+import { ErrorResponse } from "@src/types/apiTypes";
+import { QueriedUser } from "@src/types/userTypes";
 
 interface RefreshPasswordRequestBody {
   resetToken: string;
