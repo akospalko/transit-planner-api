@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import bcrypt from "bcryptjs";
-import { prisma } from "@prisma-instance/prisma";
+import { prisma } from "@src/prisma-client";
 import errorHandlerMiddleware from "@src/middleware/errorHandlerMiddleware";
 import sendResponse from "@src/utility/responseHandler";
 import { RegisterRequestBody } from "@src/types/authenticationTypes";

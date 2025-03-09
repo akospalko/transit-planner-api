@@ -1,5 +1,5 @@
 import { Response } from "express";
-import { prisma } from "@prisma-instance/prisma";
+import { prisma } from "@src/prisma-client";
 import errorHandlerMiddleware from "@src/middleware/errorHandlerMiddleware";
 import sendResponse from "@src/utility/responseHandler";
 import { QueriedUserInsensitive } from "@src/types/userTypes";
