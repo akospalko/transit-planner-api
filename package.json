@@ -5,9 +5,9 @@
   "main": "index.js",
   "scripts": {
     "dev": "tsc-watch --onsuccess \"node dist/index.js\"",
-    "build": "tsc",
+    "build": "tsc && tsc-alias",
     "postinstall": "prisma generate",
-    "start": "dotenv -- node dist/index.js"
+    "start": "node dist/index.js"
   },
   "dependencies": {
     "@prisma/client": "^6.1.0",
@@ -32,6 +32,7 @@
     "@types/nodemailer": "^6.4.17",
     "module-alias": "^2.2.3",
     "prisma": "^6.1.0",
+    "tsc-alias": "^1.8.11",
     "tsc-watch": "^6.2.1",
     "typescript": "^5.7.3"
   },
