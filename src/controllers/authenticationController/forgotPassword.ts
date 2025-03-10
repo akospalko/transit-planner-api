@@ -5,7 +5,8 @@ import { prisma } from "@src/prisma-client";
 import errorHandlerMiddleware from "@src/middleware/errorHandlerMiddleware";
 import sendResponse from "@src/utility/responseHandler";
 import { QueriedUser } from "@src/types/userTypes";
-import { ErrorResponse } from "@src/types/apiTypes";
+// import { ErrorResponse } from "@src/types/apiTypes";
+import { ErrorResponse } from "../../types/apiTypes"; // Experimenting with relative import paths
 
 const transporter = nodemailer.createTransport({
   service: process.env.EMAIL_SERVICE,
