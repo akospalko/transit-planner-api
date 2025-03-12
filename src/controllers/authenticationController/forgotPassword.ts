@@ -7,7 +7,16 @@ import sendResponse from "@src/utility/responseHandler";
 // import { QueriedUser } from "@src/types/userTypes";
 // import { ErrorResponse } from "@src/types/apiTypes";
 import { QueriedUser } from "@tp-types/userTypes";
-import { ErrorResponse } from "@tp-types/apiTypes";
+// import { ErrorResponse } from "@tp-types/apiTypes";
+
+interface ForgotPasswordRequestBody {
+  email: string;
+}
+
+type ErrorResponse<F> = {
+  message?: string;
+  fields?: F;
+};
 
 const transporter = nodemailer.createTransport({
   service: process.env.EMAIL_SERVICE,
@@ -16,10 +25,6 @@ const transporter = nodemailer.createTransport({
     pass: process.env.EMAIL_PASS,
   },
 });
-
-interface ForgotPasswordRequestBody {
-  email: string;
-}
 
 const forgotPassword = errorHandlerMiddleware(
   async (req: Request, res: Response) => {

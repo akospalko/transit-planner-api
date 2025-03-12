@@ -2,8 +2,7 @@
   "name": "transit-planner-api",
   "version": "1.0.0",
   "description": "Express api to serve transit planner mobile app",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "index.js",
   "scripts": {
     "dev": "tsc-watch --onsuccess \"node dist/index.js\"",
     "build": "npm install && tsc && tsc-alias",
