@@ -4,19 +4,12 @@ import nodemailer from "nodemailer";
 import { prisma } from "@src/prisma-client";
 import errorHandlerMiddleware from "@src/middleware/errorHandlerMiddleware";
 import sendResponse from "@src/utility/responseHandler";
-// import { QueriedUser } from "@src/types/userTypes";
-// import { ErrorResponse } from "@src/types/apiTypes";
+import { ErrorResponse } from "@tp-types/commonApiTypes";
 import { QueriedUser } from "@tp-types/userTypes";
-// import { ErrorResponse } from "@tp-types/apiTypes";
 
 interface ForgotPasswordRequestBody {
   email: string;
 }
-
-type ErrorResponse<F> = {
-  message?: string;
-  fields?: F;
-};
 
 const transporter = nodemailer.createTransport({
   service: process.env.EMAIL_SERVICE,

@@ -5,8 +5,8 @@ import sendResponse from "@src/utility/responseHandler";
 import {
   JwtPayloadAccess,
   AuthenticatedRequest,
-} from "@src/types/authenticationTypes";
-import { ErrorResponse } from "@src/types/apiTypes";
+} from "@tp-types/authenticationTypes";
+import { ErrorResponse } from "@tp-types/commonApiTypes";
 import { TokenType } from "@src/enums/authentication";
 
 const authenticateToken = async (

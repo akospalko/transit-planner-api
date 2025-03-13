@@ -7,8 +7,8 @@ import {
   AuthenticatedRequest,
   JwtPayloadAccess,
   JwtPayloadRefresh,
-} from "@src/types/authenticationTypes";
-import { ErrorResponse } from "@src/types/apiTypes";
+} from "@tp-types/authenticationTypes";
+import { ErrorResponse } from "@tp-types/commonApiTypes";
 import { TokenType } from "@src/enums/authentication";
 
 const logout = errorHandlerMiddleware(

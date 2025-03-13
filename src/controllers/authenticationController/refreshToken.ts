@@ -5,10 +5,13 @@ import sendResponse from "@src/utility/responseHandler";
 import {
   JwtPayloadRefresh,
   BlacklistedRefreshToken,
-} from "@src/types/authenticationTypes";
+} from "@tp-types/authenticationTypes";
 import { TokenType } from "@src/enums/authentication";
-import { ErrorResponse, RefreshTokenResponseData } from "@src/types/apiTypes";
-import { QueriedUser } from "@src/types/userTypes";
+import {
+  ErrorResponse,
+  RefreshTokenResponseData,
+} from "@tp-types/commonApiTypes";
+import { QueriedUser } from "@tp-types/userTypes";
 
 const refreshToken = async (req: Request, res: Response) => {
   const refreshToken: string | undefined = req.body.refreshToken;

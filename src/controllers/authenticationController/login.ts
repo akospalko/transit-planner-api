@@ -4,13 +4,13 @@ import bcrypt from "bcryptjs";
 import { prisma } from "@src/prisma-client";
 import errorHandlerMiddleware from "@src/middleware/errorHandlerMiddleware";
 import sendResponse from "@src/utility/responseHandler";
-import { QueriedUser } from "@src/types/userTypes";
-import { LoginRequestBody } from "@src/types/authenticationTypes";
+import { QueriedUser } from "@tp-types/userTypes";
+import { LoginRequestBody } from "@tp-types/authenticationTypes";
 import {
   ErrorResponse,
   LoginResponseError,
   LoginResponseData,
-} from "@src/types/apiTypes";
+} from "@tp-types/commonApiTypes";
 
 const login = errorHandlerMiddleware(async (req: Request, res: Response) => {
   const { loginIdentifier, password }: LoginRequestBody = req.body;

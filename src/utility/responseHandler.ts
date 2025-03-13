@@ -1,5 +1,5 @@
 import { Response } from "express";
-import { ApiResponse } from "@src/types/apiTypes.js";
+import { ApiResponse } from "@tp-types/commonApiTypes.js";
 
 const sendResponse = <T, F>(res: Response, params: ApiResponse<T, F>): void => {
   const { status, message, data, error } = params;

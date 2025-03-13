@@ -3,9 +3,9 @@ import bcrypt from "bcryptjs";
 import { prisma } from "@src/prisma-client";
 import errorHandlerMiddleware from "@src/middleware/errorHandlerMiddleware";
 import sendResponse from "@src/utility/responseHandler";
-import { RegisterRequestBody } from "@src/types/authenticationTypes";
-import { QueriedUser } from "@src/types/userTypes";
-import { ErrorResponse, RegisterResponseError } from "@src/types/apiTypes";
+import { RegisterRequestBody } from "@tp-types/authenticationTypes";
+import { QueriedUser } from "@tp-types/userTypes";
+import { ErrorResponse, RegisterResponseError } from "@tp-types/commonApiTypes";
 
 const register = errorHandlerMiddleware(async (req: Request, res: Response) => {
   const { username, email, password }: RegisterRequestBody = req.body;

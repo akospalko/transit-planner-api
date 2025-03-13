@@ -4,8 +4,8 @@ import crypto from "crypto";
 import { prisma } from "@src/prisma-client";
 import errorHandlerMiddleware from "@src/middleware/errorHandlerMiddleware";
 import sendResponse from "@src/utility/responseHandler";
-import { ErrorResponse } from "@src/types/apiTypes";
-import { QueriedUser } from "@src/types/userTypes";
+import { ErrorResponse } from "@tp-types/commonApiTypes";
+import { QueriedUser } from "@tp-types/userTypes";
 
 interface RefreshPasswordRequestBody {
   resetToken: string;

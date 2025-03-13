@@ -2,8 +2,8 @@ import { Request, Response } from "express";
 import { prisma } from "@src/prisma-client";
 import errorHandlerMiddleware from "@src/middleware/errorHandlerMiddleware";
 import sendResponse from "@src/utility/responseHandler";
-import { QueriedUserInsensitive } from "@src/types/userTypes";
-import { ErrorResponse } from "@src/types/apiTypes";
+import { QueriedUserInsensitive } from "@tp-types/userTypes";
+import { ErrorResponse } from "@tp-types/commonApiTypes";
 
 const getUser = errorHandlerMiddleware(async (req: Request, res: Response) => {
   const userId: number = Number(req.params.id);

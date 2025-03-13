@@ -7,12 +7,12 @@ import {
   QueriedUserPassword,
   UserUpdateEmailRequestBody,
   UserUpdatePasswordRequestBody,
-} from "@src/types/userTypes";
+} from "@tp-types/userTypes";
 import {
   ErrorResponse,
   UpdatePasswordError,
   UpdateEmailError,
-} from "@src/types/apiTypes";
+} from "@tp-types/commonApiTypes";
 
 const updateEmail = errorHandlerMiddleware(
   async (req: Request, res: Response) => {

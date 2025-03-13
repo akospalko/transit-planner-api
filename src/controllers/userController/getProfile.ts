@@ -2,9 +2,9 @@ import { Response } from "express";
 import { prisma } from "@src/prisma-client";
 import errorHandlerMiddleware from "@src/middleware/errorHandlerMiddleware";
 import sendResponse from "@src/utility/responseHandler";
-import { QueriedUserInsensitive } from "@src/types/userTypes";
-import { AuthenticatedRequest } from "@src/types/authenticationTypes";
-import { ErrorResponse } from "@src/types/apiTypes";
+import { QueriedUserInsensitive } from "@tp-types/userTypes";
+import { AuthenticatedRequest } from "@tp-types/authenticationTypes";
+import { ErrorResponse } from "@tp-types/commonApiTypes";
 
 const getProfile = errorHandlerMiddleware(
   async (req: AuthenticatedRequest, res: Response) => {

@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import sendResponse from "@src/utility/responseHandler";
-import { ErrorResponse } from "@src/types/apiTypes";
+import { ErrorResponse } from "@tp-types/commonApiTypes";
 
 export type ErrorHandlerMiddlewareParameter = (
   req: Request,
