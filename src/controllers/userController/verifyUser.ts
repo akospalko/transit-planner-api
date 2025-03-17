@@ -1,10 +1,14 @@
+// TODO Improve typing
 // TODO 1. via profile ? click btn (profile)
-
 import { Request, Response } from "express";
 import { prisma } from "@src/prisma-client";
 import errorHandlerMiddleware from "@src/middleware/errorHandlerMiddleware";
 import sendResponse from "@src/utility/responseHandler";
 import { ErrorResponse } from "@tp-types/commonApiTypes";
+import {
+  AuthenticatedRequest,
+  JwtPayloadAccess,
+} from "@tp-types/authenticationTypes";
 
 // 2. via email -> generate link -> send link via mail -> click link -> send request -> verify user
 export interface VerifyResponseData {
@@ -13,29 +17,33 @@ export interface VerifyResponseData {
 
 const verifyUser = errorHandlerMiddleware(
   async (req: Request, res: Response) => {
-    const userId = req.user?.id; // Assuming user ID is extracted from auth middleware
+    const { user }: AuthenticatedRequest = req;
 
-    if (!userId) {
-      const errors: ErrorResponse = { message: "Unauthorized access" };
-      return sendResponse<null, ErrorResponse>(res, {
+    const errors: ErrorResponse<null> = {};
+
+    if (!user) {
+      errors.message = "Unauthorized";
+      return sendResponse<null, null>(res, {
         status: 401,
-        message: "Verification failed",
+        message: "Logout failed",
         error: errors,
       });
     }
 
-    const user = await prisma.user.findUnique({ where: { id: userId } });
+    const { id }: JwtPayloadAccess = user;
 
-    if (!user) {
-      const errors: ErrorResponse = { message: "User not found" };
-      return sendResponse<null, ErrorResponse>(res, {
+    const queriedUser = await prisma.user.findUnique({ where: { id } });
+
+    if (!queriedUser) {
+      errors.message = "User not found";
+      return sendResponse<null, null>(res, {
         status: 404,
         message: "Verification failed",
         error: errors,
       });
     }
 
-    if (user.verifiedAt) {
+    if (queriedUser.verifiedAt) {
       return sendResponse<VerifyResponseData, null>(res, {
         status: 200,
         message: "User already verified",
@@ -44,7 +52,7 @@ const verifyUser = errorHandlerMiddleware(
     }
 
     await prisma.user.update({
-      where: { id: userId },
+      where: { id },
       data: { verifiedAt: new Date() },
     });
 

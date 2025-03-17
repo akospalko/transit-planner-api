@@ -8,6 +8,7 @@ import {
   updateEmail,
   updatePassword,
 } from "@src/controllers/userController/updateUser";
+import verifyUser from "@src/controllers/userController/verifyUser";
 import { Role } from "@src/enums/authentication";
 
 const userRouter: Router = Router();
@@ -50,6 +51,14 @@ userRouter.patch(
   updatePassword
 );
 
-// userRouter.route("/:id/verify").post();
+userRouter.post(
+  "/:id/verify",
+  authenticateToken,
+  authorizeRoles([Role.USER, Role.ADMIN]),
+  restrictToSelf,
+  verifyUser
+);
+
+// userRouter.post("/:id/verify-by-email"); // TODO
 
 export default userRouter;
