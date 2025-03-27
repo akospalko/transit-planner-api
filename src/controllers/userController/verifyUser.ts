@@ -4,29 +4,27 @@ import { Request, Response } from "express";
 import { prisma } from "@src/prisma-client";
 import errorHandlerMiddleware from "@src/middleware/errorHandlerMiddleware";
 import sendResponse from "@src/utility/responseHandler";
-import { ErrorResponse } from "@tp-types/commonApiTypes";
+import {
+  ErrorResponse,
+  VerifyUserResponseData,
+} from "@tp-types/commonApiTypes";
 import {
   AuthenticatedRequest,
   JwtPayloadAccess,
 } from "@tp-types/authenticationTypes";
-
-// 2. via email -> generate link -> send link via mail -> click link -> send request -> verify user
-export interface VerifyResponseData {
-  verified: boolean;
-}
 
 const verifyUser = errorHandlerMiddleware(
   async (req: Request, res: Response) => {
     const { user }: AuthenticatedRequest = req;
 
     const errors: ErrorResponse<null> = {};
-
     if (!user) {
       errors.message = "Unauthorized";
-      return sendResponse<null, null>(res, {
+      return sendResponse<VerifyUserResponseData, null>(res, {
         status: 401,
         message: "Logout failed",
         error: errors,
+        data: { verified: false },
       });
     }
 
@@ -36,15 +34,17 @@ const verifyUser = errorHandlerMiddleware(
 
     if (!queriedUser) {
       errors.message = "User not found";
-      return sendResponse<null, null>(res, {
+
+      return sendResponse<VerifyUserResponseData, null>(res, {
         status: 404,
         message: "Verification failed",
         error: errors,
+        data: { verified: false },
       });
     }
 
     if (queriedUser.verifiedAt) {
-      return sendResponse<VerifyResponseData, null>(res, {
+      return sendResponse<VerifyUserResponseData, null>(res, {
         status: 200,
         message: "User already verified",
         data: { verified: true },
@@ -56,7 +56,7 @@ const verifyUser = errorHandlerMiddleware(
       data: { verifiedAt: new Date() },
     });
 
-    return sendResponse<VerifyResponseData, null>(res, {
+    return sendResponse<VerifyUserResponseData, null>(res, {
       status: 200,
       message: "User verified successfully",
       data: { verified: true },

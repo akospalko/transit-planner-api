@@ -41,6 +41,10 @@ type UpdatePasswordError = {
   newPassword?: string;
 };
 
+interface VerifyUserResponseData {
+  verified: boolean;
+}
+
 export {
   ErrorResponse,
   ApiResponse,
@@ -50,4 +54,5 @@ export {
   RefreshTokenResponseData,
   UpdateEmailError,
   UpdatePasswordError,
+  VerifyUserResponseData,
 };
