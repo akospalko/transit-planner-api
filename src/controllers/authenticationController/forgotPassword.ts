@@ -1,23 +1,15 @@
 import { Request, Response } from "express";
 import crypto from "crypto";
-import nodemailer from "nodemailer";
 import { prisma } from "@src/prisma-client";
 import errorHandlerMiddleware from "@src/middleware/errorHandlerMiddleware";
 import sendResponse from "@src/utility/responseHandler";
 import { ErrorResponse } from "@tp-types/commonApiTypes";
 import { QueriedUser } from "@tp-types/userTypes";
+import { sendMail } from "@src/utility/sendMail";
 
 interface ForgotPasswordRequestBody {
   email: string;
 }
-
-const transporter = nodemailer.createTransport({
-  service: process.env.EMAIL_SERVICE,
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
-  },
-});
 
 const forgotPassword = errorHandlerMiddleware(
   async (req: Request, res: Response) => {
@@ -27,7 +19,6 @@ const forgotPassword = errorHandlerMiddleware(
 
     if (!email) {
       errors.message = "Email is required";
-
       return sendResponse<null, null>(res, {
         status: 400,
         message: "Request new password failed",
@@ -67,8 +58,7 @@ const forgotPassword = errorHandlerMiddleware(
     const resetLink: string = `${process.env.FRONTEND_APP_URL}/reset-password?token=${resetTokenPlain}`;
 
     try {
-      await transporter.sendMail({
-        from: process.env.EMAIL_USER,
+      await sendMail({
         to: email,
         subject: "Password Reset",
         text: `Click the link below to reset your password:\n${resetLink}\n\nThis link is valid for 15 minutes.`,
