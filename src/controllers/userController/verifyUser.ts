@@ -1,5 +1,4 @@
 // TODO Improve typing
-// TODO 1. via profile ? click btn (profile)
 import { Request, Response } from "express";
 import { prisma } from "@src/prisma-client";
 import errorHandlerMiddleware from "@src/middleware/errorHandlerMiddleware";
