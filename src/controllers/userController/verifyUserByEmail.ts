@@ -3,8 +3,8 @@ import crypto from "crypto";
 import { prisma } from "@src/prisma-client";
 import errorHandlerMiddleware from "@src/middleware/errorHandlerMiddleware";
 import sendResponse from "@src/utility/responseHandler";
-import { ErrorResponse } from "@tp-types/commonApiTypes";
 import { sendMail } from "@src/utility/sendMail";
+import { ErrorResponse } from "@tp-types/commonApiTypes";
 
 const requestVerificationEmail = errorHandlerMiddleware(
   async (req: Request, res: Response) => {
@@ -47,7 +47,10 @@ const requestVerificationEmail = errorHandlerMiddleware(
 
     await prisma.user.update({
       where: { email },
-      data: { verifyToken: verifyTokenHashed, verifyTokenExp }, // TODO Add schema field to store verifyToken - ?
+      data: {
+        verifyEmailToken: verifyTokenHashed,
+        verifyEmailTokenExp: verifyTokenExp,
+      },
     });
 
     const verifyLink = `${process.env.FRONTEND_APP_URL}/verify-email?token=${verifyTokenPlain}`;
