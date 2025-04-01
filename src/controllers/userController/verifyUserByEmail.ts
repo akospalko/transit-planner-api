@@ -5,6 +5,7 @@ import errorHandlerMiddleware from "@src/middleware/errorHandlerMiddleware";
 import sendResponse from "@src/utility/responseHandler";
 import { sendMail } from "@src/utility/sendMail";
 import { ErrorResponse } from "@tp-types/commonApiTypes";
+import { QueriedUser } from "@tp-types/userTypes";
 
 const requestVerificationEmail = errorHandlerMiddleware(
   async (req: Request, res: Response) => {
@@ -20,7 +21,9 @@ const requestVerificationEmail = errorHandlerMiddleware(
       });
     }
 
-    const user = await prisma.user.findUnique({ where: { email } });
+    const user: QueriedUser | null = await prisma.user.findUnique({
+      where: { email },
+    });
 
     if (!user) {
       return sendResponse(res, {
@@ -36,9 +39,8 @@ const requestVerificationEmail = errorHandlerMiddleware(
       });
     }
 
-    // Generate token (extracted from forgot password logic)
-    const verifyTokenPlain = crypto.randomBytes(32).toString("hex");
-    const verifyTokenHashed = crypto
+    const verifyTokenPlain: string = crypto.randomBytes(32).toString("hex");
+    const verifyTokenHashed: string = crypto
       .createHash("sha256")
       .update(verifyTokenPlain)
       .digest("hex");
@@ -53,7 +55,7 @@ const requestVerificationEmail = errorHandlerMiddleware(
       },
     });
 
-    const verifyLink = `${process.env.FRONTEND_APP_URL}/verify-email?token=${verifyTokenPlain}`;
+    const verifyLink: string = `${process.env.FRONTEND_APP_URL}/verify-email?token=${verifyTokenPlain}`;
 
     try {
       await sendMail({
