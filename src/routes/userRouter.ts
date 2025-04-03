@@ -60,6 +60,6 @@ userRouter.post(
   verifyUser
 );
 
-userRouter.post("/:id/verify-by-email", requestVerificationEmail);
+userRouter.post("/verify-by-email", requestVerificationEmail);
 
 export default userRouter;
