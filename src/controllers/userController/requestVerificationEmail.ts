@@ -2,10 +2,10 @@ import { Request, Response } from "express";
 import crypto from "crypto";
 import { prisma } from "@src/prisma-client";
 import errorHandlerMiddleware from "@src/middleware/errorHandlerMiddleware";
-import sendResponse from "@src/utility/responseHandler";
-import { sendMail } from "@src/utility/sendMail";
 import { ErrorResponse } from "@tp-types/commonApiTypes";
 import { QueriedUser } from "@tp-types/userTypes";
+import sendResponse from "@src/utility/responseHandler";
+import { sendMail } from "@src/utility/sendMail";
 
 const requestVerificationEmail = errorHandlerMiddleware(
   async (req: Request, res: Response) => {
@@ -28,7 +28,7 @@ const requestVerificationEmail = errorHandlerMiddleware(
     if (!user) {
       return sendResponse(res, {
         status: 200,
-        message: "If the email exists, a verification link has been sent.",
+        message: "Verification link has been sent to your email address.",
       });
     }
 
@@ -55,7 +55,7 @@ const requestVerificationEmail = errorHandlerMiddleware(
       },
     });
 
-    const verifyLink: string = `${process.env.FRONTEND_APP_URL}/verify-email?token=${verifyTokenPlain}`;
+    const verifyLink: string = `${process.env.API_URL}/app-link/verify-email?token=${verifyTokenPlain}`;
 
     try {
       await sendMail({
@@ -64,6 +64,7 @@ const requestVerificationEmail = errorHandlerMiddleware(
         text: `Click the link below to verify your email:\n${verifyLink}\n\nThis link is valid for 15 minutes.`,
         html: `<p>Click the link below to verify your email:</p>
                <a href="${verifyLink}" style="display: inline-block; padding: 10px 20px; background-color: #007BFF; color: #FFF; text-decoration: none; border-radius: 5px;">Verify Email</a>
+               <p>Raw link: ${verifyLink}</p>,
                <p>This link is valid for 15 minutes.</p>`,
       });
     } catch (error) {
@@ -75,7 +76,7 @@ const requestVerificationEmail = errorHandlerMiddleware(
 
     return sendResponse(res, {
       status: 200,
-      message: "Verification link sent to your email.",
+      message: "Verification link has been sent to your email address.",
     });
   }
 );

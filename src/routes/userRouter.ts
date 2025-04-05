@@ -10,7 +10,8 @@ import {
 } from "@src/controllers/userController/updateUser";
 import verifyUser from "@src/controllers/userController/verifyUser";
 import { Role } from "@src/enums/authentication";
-import { requestVerificationEmail } from "@src/controllers/userController/verifyUserByEmail";
+import { requestVerificationEmail } from "@src/controllers/userController/requestVerificationEmail";
+import verifyEmail from "@src/controllers/userController/verifyEmail";
 
 const userRouter: Router = Router();
 
@@ -60,6 +61,6 @@ userRouter.post(
   verifyUser
 );
 
-userRouter.post("/verify-by-email", requestVerificationEmail);
+userRouter.post("/request-verification-email", requestVerificationEmail);
 
 export default userRouter;
