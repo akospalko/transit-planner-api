@@ -11,7 +11,6 @@ import {
 import verifyUser from "@src/controllers/userController/verifyUser";
 import { Role } from "@src/enums/authentication";
 import { requestVerificationEmail } from "@src/controllers/userController/requestVerificationEmail";
-import verifyEmail from "@src/controllers/userController/verifyEmail";
 
 const userRouter: Router = Router();
 
