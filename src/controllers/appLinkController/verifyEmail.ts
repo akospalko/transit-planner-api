@@ -55,14 +55,16 @@ const verifyEmail = errorHandlerMiddleware(
           <script>
             // Wait for a short duration to ensure the user sees the message
             setTimeout(function() {
-              window.location = "myapp://email-verified?message=${encodeURIComponent(
-                successMessage
-              )}";
+              window.location = "${
+                process.env.FRONTEND_APP_URI_SCHEME
+              }://email-verified?message=${encodeURIComponent(successMessage)}";
             }, 500);
           </script>
-          <p>If you are not redirected, <a href="myapp://email-verified?message=${encodeURIComponent(
-            successMessage
-          )}">click here</a>.</p>
+          <p>If you are not redirected, <a href="${
+            process.env.FRONTEND_APP_URI_SCHEME
+          }://email-verified?message=${encodeURIComponent(
+      successMessage
+    )}">click here</a>.</p>
         </body>
       </html>
     `);
