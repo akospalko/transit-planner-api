@@ -6,6 +6,7 @@ import bodyParser from "body-parser";
 import userRouter from "@src/routes/userRouter";
 import authenticationRouter from "@src/routes/authenticationRouter";
 import appLinkRouter from "@src/routes/appLinkRouter";
+import assetLinkRouter from "./routes/assetLinkRouter";
 import allowedOrigins from "@src/config/allowedOrigins";
 import "@src/cron/blacklistedTokenCleanupCron";
 
@@ -18,6 +19,7 @@ dotenv.config();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+app.use("/api/v1/assetlinks", assetLinkRouter);
 app.use("/api/v1/user", userRouter);
 app.use("/api/v1/auth", authenticationRouter);
 app.use("/api/v1/app-link", appLinkRouter);
