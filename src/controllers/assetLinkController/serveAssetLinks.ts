@@ -9,8 +9,8 @@ const serveAssetLinks = errorHandlerMiddleware(
         relation: ["delegate_permission/common.handle_all_urls"],
         target: {
           namespace: "android_app",
-          package_name: "com.yourcompany.yourapp",
-          sha256_cert_fingerprints: ["<YOUR_SHA256_FINGERPRINT>"],
+          package_name: process.env.APP_PACKAGE_NAME,
+          sha256_cert_fingerprints: [process.env.APP_SHA256_CERT_FINGERPRINT],
         },
       },
     ]);
