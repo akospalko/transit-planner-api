@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
 import errorHandlerMiddleware from "@src/middleware/errorHandlerMiddleware";
 
-// TODO Data is coming from .env
 const serveAssetLinks = errorHandlerMiddleware(
   async (_: Request, res: Response) => {
     res.json([
