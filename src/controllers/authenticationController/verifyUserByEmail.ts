@@ -5,7 +5,7 @@ import errorHandlerMiddleware from "@src/middleware/errorHandlerMiddleware";
 import sendResponse from "@src/utility/responseHandler";
 import { QueriedUser } from "@tp-types/userTypes";
 
-const verifyEmail = errorHandlerMiddleware(
+const verifyUserByEmail = errorHandlerMiddleware(
   async (req: Request, res: Response) => {
     const { token } = req.query;
 
@@ -71,4 +71,4 @@ const verifyEmail = errorHandlerMiddleware(
   }
 );
 
-export default verifyEmail;
+export default verifyUserByEmail;

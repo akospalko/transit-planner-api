@@ -10,7 +10,6 @@ import {
 } from "@src/controllers/userController/updateUser";
 import verifyUser from "@src/controllers/userController/verifyUser";
 import { Role } from "@src/enums/authentication";
-import { requestVerificationEmail } from "@src/controllers/userController/requestVerificationEmail";
 
 const userRouter: Router = Router();
 
@@ -59,7 +58,5 @@ userRouter.post(
   restrictToSelf,
   verifyUser
 );
-
-userRouter.post("/request-verification-email", requestVerificationEmail);
 
 export default userRouter;

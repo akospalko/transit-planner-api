@@ -7,7 +7,7 @@ import { QueriedUser } from "@tp-types/userTypes";
 import sendResponse from "@src/utility/responseHandler";
 import { sendMail } from "@src/utility/sendMail";
 
-const requestVerificationEmail = errorHandlerMiddleware(
+const requestUserVerificationEmail = errorHandlerMiddleware(
   async (req: Request, res: Response) => {
     const { email } = req.body;
     const errors: ErrorResponse<null> = {};
@@ -55,7 +55,7 @@ const requestVerificationEmail = errorHandlerMiddleware(
       },
     });
 
-    const verifyLink: string = `${process.env.API_URL}/app-link/verify-email?token=${verifyTokenPlain}`;
+    const verifyLink: string = `${process.env.API_URL}/auth/verify-email?token=${verifyTokenPlain}`;
 
     try {
       await sendMail({
@@ -81,4 +81,4 @@ const requestVerificationEmail = errorHandlerMiddleware(
   }
 );
 
-export { requestVerificationEmail };
+export default requestUserVerificationEmail;
