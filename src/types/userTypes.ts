@@ -20,6 +20,8 @@ export type QueriedUser = {
   refreshToken: string | null;
   resetToken?: string | null;
   resetTokenExp?: Date | null;
+  verifyEmailToken?: string | null;
+  verifyEmailTokenExp?: Date | null;
   createdAt: Date;
   verifiedAt: Date | null;
 };
