@@ -6,18 +6,14 @@ import errorHandlerMiddleware from "@src/middleware/errorHandlerMiddleware";
 import sendResponse from "@src/utility/responseHandler";
 import { ErrorResponse } from "@tp-types/commonApiTypes";
 import { QueriedUser } from "@tp-types/userTypes";
+import { ResetPasswordRequestBody } from "@tp-types/authenticationTypes";
 
-interface RefreshPasswordRequestBody {
-  resetToken: string;
-  newPassword: string;
-}
-
-const refreshPassword = errorHandlerMiddleware(
+const resetPassword = errorHandlerMiddleware(
   async (req: Request, res: Response) => {
-    const { resetToken, newPassword }: RefreshPasswordRequestBody = req.body;
+    const { token, newPassword }: ResetPasswordRequestBody = req.body;
     const errors: ErrorResponse<null> = {};
 
-    if (!resetToken || !newPassword) {
+    if (!token || !newPassword) {
       errors.message = "Reset token and new password are required.";
       return sendResponse<null, null>(res, {
         status: 400,
@@ -26,13 +22,11 @@ const refreshPassword = errorHandlerMiddleware(
       });
     }
 
-    // Hash the provided token to match stored hashed token
-    const hashedToken = crypto
+    const hashedToken: string = crypto
       .createHash("sha256")
-      .update(resetToken)
+      .update(token)
       .digest("hex");
 
-    // Find user by hashed resetToken and ensure token is not expired
     const user: QueriedUser | null = await prisma.user.findFirst({
       where: { resetToken: hashedToken, resetTokenExp: { gt: new Date() } },
     });
@@ -46,10 +40,8 @@ const refreshPassword = errorHandlerMiddleware(
       });
     }
 
-    // Hash new password
     const hashedPassword: string = await bcrypt.hash(newPassword, 10);
 
-    // Update user password and clear reset token
     await prisma.user.update({
       where: { id: user.id },
       data: { password: hashedPassword, resetToken: null, resetTokenExp: null },
@@ -62,4 +54,4 @@ const refreshPassword = errorHandlerMiddleware(
   }
 );
 
-export default refreshPassword;
+export default resetPassword;

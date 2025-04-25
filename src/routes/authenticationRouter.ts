@@ -4,10 +4,10 @@ import register from "@src/controllers/authenticationController/register";
 import login from "@src/controllers/authenticationController/login";
 import logout from "@src/controllers/authenticationController/logout";
 import refreshToken from "@src/controllers/authenticationController/refreshToken";
-import forgotPassword from "@src/controllers/authenticationController/forgotPassword";
-import refreshPassword from "@src/controllers/authenticationController/refreshPassword";
+import requestPasswordResetEmail from "@src/controllers/authenticationController/requestPasswordResetEmail";
+import resetPassword from "@src/controllers/authenticationController/resetPassword";
 import verifyUserByEmail from "@src/controllers/authenticationController/verifyUserByEmail";
-import requestUserVerificationEmail from "@src/controllers/authenticationController/requestUserVerificationEmail";
+import resetPasswordRedirectLink from "@src/controllers/authenticationController/resetPasswordRedirectLink";
 
 const authenticationRouter: Router = Router();
 
@@ -16,13 +16,12 @@ authenticationRouter.post("/login", login);
 authenticationRouter.post("/logout", authenticateToken, logout);
 authenticationRouter.post("/refresh-token", refreshToken);
 
-authenticationRouter.post("/forgot-password", forgotPassword);
-authenticationRouter.post("/refresh-password", refreshPassword);
-
-authenticationRouter.post(
-  "/request-verification-email",
-  requestUserVerificationEmail
+authenticationRouter.post("/forgot-password", requestPasswordResetEmail);
+authenticationRouter.get(
+  "/reset-password-redirect-link",
+  resetPasswordRedirectLink
 );
+authenticationRouter.post("/reset-password", resetPassword);
 authenticationRouter.get("/verify-email", verifyUserByEmail);
 
 export default authenticationRouter;

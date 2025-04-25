@@ -6,14 +6,12 @@ import sendResponse from "@src/utility/responseHandler";
 import { ErrorResponse } from "@tp-types/commonApiTypes";
 import { QueriedUser } from "@tp-types/userTypes";
 import { sendMail } from "@src/utility/sendMail";
+import { MailOptions } from "@tp-types/mail";
+import { RequestPasswordResetEmailBody } from "@tp-types/authenticationTypes";
 
-interface ForgotPasswordRequestBody {
-  email: string;
-}
-
-const forgotPassword = errorHandlerMiddleware(
+const requestPasswordResetEmail = errorHandlerMiddleware(
   async (req: Request, res: Response) => {
-    const { email }: ForgotPasswordRequestBody = req.body;
+    const { email }: RequestPasswordResetEmailBody = req.body;
 
     const errors: ErrorResponse<null> = {};
 
@@ -39,7 +37,6 @@ const forgotPassword = errorHandlerMiddleware(
       });
     }
 
-    // Generate token
     const resetTokenPlain = crypto.randomBytes(32).toString("hex");
     const resetTokenHashed = crypto
       .createHash("sha256")
@@ -48,24 +45,24 @@ const forgotPassword = errorHandlerMiddleware(
 
     const resetTokenExp: Date = new Date(Date.now() + 15 * 60 * 1000); // 15 min expiry
 
-    // Store in DB
     await prisma.user.update({
       where: { email },
       data: { resetToken: resetTokenHashed, resetTokenExp },
     });
 
-    // Send email
-    const resetLink: string = `${process.env.FRONTEND_APP_URL}/reset-password?token=${resetTokenPlain}`;
+    const passwordResetLink: string = `${process.env.API_URL}/auth/reset-password-redirect-link?token=${resetTokenPlain}`;
+
+    const passwordResetEmail: MailOptions = {
+      to: email,
+      subject: "Password Reset",
+      text: `Click the link below to reset your password:\n${passwordResetLink}\n\nThis link is valid for 15 minutes.`,
+      html: `<p>Click the link below to reset your password:</p>
+             <a href="${passwordResetLink}" style="display: inline-block; padding: 10px 20px; background-color: #007BFF; color: #FFF; text-decoration: none; border-radius: 5px;">Reset Password</a>
+             <p>This link is valid for 15 minutes.</p>`,
+    };
 
     try {
-      await sendMail({
-        to: email,
-        subject: "Password Reset",
-        text: `Click the link below to reset your password:\n${resetLink}\n\nThis link is valid for 15 minutes.`,
-        html: `<p>Click the link below to reset your password:</p>
-               <a href="${resetLink}" style="display: inline-block; padding: 10px 20px; background-color: #007BFF; color: #FFF; text-decoration: none; border-radius: 5px;">Reset Password</a>
-               <p>This link is valid for 15 minutes.</p>`,
-      });
+      await sendMail(passwordResetEmail);
     } catch (error) {
       return sendResponse<null, null>(res, {
         status: 500,
@@ -80,4 +77,4 @@ const forgotPassword = errorHandlerMiddleware(
   }
 );
 
-export default forgotPassword;
+export default requestPasswordResetEmail;

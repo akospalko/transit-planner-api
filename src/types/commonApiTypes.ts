@@ -45,6 +45,13 @@ interface VerifyUserResponseData {
   verified: boolean;
 }
 
+interface RedirectParams {
+  token?: string;
+  message: string;
+  error?: string;
+  status?: number;
+}
+
 export {
   ErrorResponse,
   ApiResponse,
@@ -55,4 +62,5 @@ export {
   UpdateEmailError,
   UpdatePasswordError,
   VerifyUserResponseData,
+  RedirectParams,
 };

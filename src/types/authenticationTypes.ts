@@ -39,3 +39,13 @@ export interface LoginRequestBody {
   loginIdentifier: string; // username or email
   password: string;
 }
+
+// Forgot Password / Reset Password
+export interface ResetPasswordRequestBody {
+  token: string;
+  newPassword: string;
+}
+
+export interface RequestPasswordResetEmailBody {
+  email: string;
+}
