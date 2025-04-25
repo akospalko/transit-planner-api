@@ -1,11 +1,5 @@
 import nodemailer from "nodemailer";
-
-type MailOptions = {
-  to: string;
-  subject: string;
-  text?: string;
-  html?: string;
-};
+import { MailOptions } from "@src/types/mail";
 
 const transporter = nodemailer.createTransport({
   service: process.env.EMAIL_SERVICE,

@@ -2,10 +2,12 @@ import { Request, Response } from "express";
 import bcrypt from "bcryptjs";
 import { prisma } from "@src/prisma-client";
 import errorHandlerMiddleware from "@src/middleware/errorHandlerMiddleware";
+import sendUserVerificationEmail from "@src/services/sendUserVerificationEmail";
 import sendResponse from "@src/utility/responseHandler";
 import { RegisterRequestBody } from "@tp-types/authenticationTypes";
 import { QueriedUser } from "@tp-types/userTypes";
 import { ErrorResponse, RegisterResponseError } from "@tp-types/commonApiTypes";
+import { VerificationStatus } from "@src/enums/verificationStatus";
 
 const register = errorHandlerMiddleware(async (req: Request, res: Response) => {
   const { username, email, password }: RegisterRequestBody = req.body;
@@ -48,9 +50,16 @@ const register = errorHandlerMiddleware(async (req: Request, res: Response) => {
     data: user,
   });
 
+  const sentUserVerificationEmailResult = await sendUserVerificationEmail(
+    email
+  );
+
   return sendResponse<null, null>(res, {
     status: 201,
-    message: "User created successfully",
+    message:
+      sentUserVerificationEmailResult === VerificationStatus.EMAIL_SENT
+        ? "User created. User verification email is sent to you"
+        : "User created. Log in and verify your account from your profile settings!",
   });
 });
 
