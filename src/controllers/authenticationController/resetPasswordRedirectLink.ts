@@ -20,7 +20,7 @@ const resetPasswordRedirectLink = errorHandlerMiddleware(
       redirectParams.status = 400;
       const redirectLink: string = `${
         process.env.FRONTEND_APP_URI_SCHEME
-      }://email-verified?message=${encodeURIComponent(
+      }://reset-password?message=${encodeURIComponent(
         redirectParams.message
       )}&error=${encodeURIComponent(
         redirectParams.error
@@ -44,7 +44,7 @@ const resetPasswordRedirectLink = errorHandlerMiddleware(
       redirectParams.status = 400;
       const redirectLink: string = `${
         process.env.FRONTEND_APP_URI_SCHEME
-      }://email-verified?message=${encodeURIComponent(
+      }://reset-password?message=${encodeURIComponent(
         redirectParams.message
       )}&error=${encodeURIComponent(
         redirectParams.error
@@ -57,7 +57,7 @@ const resetPasswordRedirectLink = errorHandlerMiddleware(
     redirectParams.status = 200;
     const successRedirectLink: string = `${
       process.env.FRONTEND_APP_URI_SCHEME
-    }://email-verified?token=${encodeURIComponent(
+    }://reset-password?token=${encodeURIComponent(
       token
     )}&message=${encodeURIComponent(redirectParams.message)}&status=${
       redirectParams.status
