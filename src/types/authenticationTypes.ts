@@ -43,7 +43,8 @@ export interface LoginRequestBody {
 // Forgot Password / Reset Password
 export interface ResetPasswordRequestBody {
   token: string;
-  newPassword: string;
+  password: string;
+  confirmPassword: string;
 }
 
 export interface RequestPasswordResetEmailBody {

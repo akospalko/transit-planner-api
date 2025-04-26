@@ -10,11 +10,12 @@ import { ResetPasswordRequestBody } from "@tp-types/authenticationTypes";
 
 const resetPassword = errorHandlerMiddleware(
   async (req: Request, res: Response) => {
-    const { token, newPassword }: ResetPasswordRequestBody = req.body;
+    const { token, password, confirmPassword }: ResetPasswordRequestBody =
+      req.body;
     const errors: ErrorResponse<null> = {};
 
-    if (!token || !newPassword) {
-      errors.message = "Reset token and new password are required.";
+    if (!token || !password || !confirmPassword) {
+      errors.message = "Reset token and passwords are required.";
       return sendResponse<null, null>(res, {
         status: 400,
         message: "Refresh password failed",
@@ -22,6 +23,14 @@ const resetPassword = errorHandlerMiddleware(
       });
     }
 
+    if (password !== confirmPassword) {
+      errors.message = "Passwords do not match.";
+      return sendResponse<null, null>(res, {
+        status: 400,
+        message: "Reset password failed",
+        error: errors,
+      });
+    }
     const hashedToken: string = crypto
       .createHash("sha256")
       .update(token)
@@ -40,7 +49,7 @@ const resetPassword = errorHandlerMiddleware(
       });
     }
 
-    const hashedPassword: string = await bcrypt.hash(newPassword, 10);
+    const hashedPassword: string = await bcrypt.hash(password, 10);
 
     await prisma.user.update({
       where: { id: user.id },
