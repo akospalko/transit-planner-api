@@ -16,6 +16,7 @@ import {
 
 const updateEmail = errorHandlerMiddleware(
   async (req: Request, res: Response) => {
+    // TODO Revise
     const { currentPassword, email }: UserUpdateEmailRequestBody = req.body;
     const userId: number = Number(req.params.id);
 
