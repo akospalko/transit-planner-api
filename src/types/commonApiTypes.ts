@@ -39,6 +39,7 @@ type UpdateEmailError = {
 type UpdatePasswordError = {
   currentPassword?: string;
   newPassword?: string;
+  newPasswordConfirm?: string;
 };
 
 interface VerifyUserResponseData {

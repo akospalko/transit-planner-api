@@ -6,8 +6,9 @@ export type UserUpdateEmailRequestBody = {
 };
 
 export type UserUpdatePasswordRequestBody = {
-  newPassword: string;
   currentPassword: string;
+  newPassword: string;
+  newPasswordConfirm: string;
 };
 
 // Data
@@ -26,9 +27,9 @@ export type QueriedUser = {
   verifiedAt: Date | null;
 };
 
+export type QueriedUserPassword = Pick<QueriedUser, "password">;
+
 export type QueriedUserInsensitive = Pick<
   QueriedUser,
   "id" | "username" | "email" | "createdAt" | "verifiedAt"
 >;
-
-export type QueriedUserPassword = Pick<QueriedUser, "id" | "password">;

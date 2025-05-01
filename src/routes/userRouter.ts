@@ -4,10 +4,8 @@ import authenticateToken from "@src/middleware/authenticateToken";
 import restrictToSelf from "@src/middleware/restrictToSelf";
 import getProfile from "@src/controllers/userController/getProfile";
 import getAllUsers from "@src/controllers/userController/getAllUsers";
-import {
-  updateEmail,
-  updatePassword,
-} from "@src/controllers/userController/updateUser";
+import { updateEmail } from "@src/controllers/userController/updateUser";
+import updatePassword from "@src/controllers/userController/updatePassword";
 import verifyUser from "@src/controllers/userController/verifyUser";
 import { Role } from "@src/enums/authentication";
 
@@ -43,13 +41,7 @@ userRouter.patch(
   updateEmail
 );
 
-userRouter.patch(
-  "/:id/update-password",
-  authenticateToken,
-  authorizeRoles([Role.USER, Role.ADMIN]),
-  restrictToSelf,
-  updatePassword
-);
+userRouter.patch("/update-password", authenticateToken, updatePassword);
 
 userRouter.post(
   "/:id/verify",
