@@ -1,4 +1,3 @@
-// TODO Improve typing
 import { Request, Response } from "express";
 import { prisma } from "@src/prisma-client";
 import errorHandlerMiddleware from "@src/middleware/errorHandlerMiddleware";
