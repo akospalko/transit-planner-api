@@ -34,14 +34,18 @@ userRouter.get(
 );
 
 userRouter.patch(
-  "/:id/update-email",
+  "/update-email",
   authenticateToken,
   authorizeRoles([Role.USER, Role.ADMIN]),
-  restrictToSelf,
   updateEmail
 );
 
-userRouter.patch("/update-password", authenticateToken, updatePassword);
+userRouter.patch(
+  "/update-password",
+  authenticateToken,
+  authorizeRoles([Role.USER, Role.ADMIN]),
+  updatePassword
+);
 
 userRouter.post(
   "/:id/verify",
