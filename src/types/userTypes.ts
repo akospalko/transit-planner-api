@@ -27,6 +27,9 @@ export type QueriedUser = {
   verifiedAt: Date | null;
 };
 
+export type QueriedUserUpdateEmail = Pick<QueriedUser, "password" | "email">;
+
+// TODO Rename to QueriedUserUpdatePassword
 export type QueriedUserPassword = Pick<QueriedUser, "password">;
 
 export type QueriedUserInsensitive = Pick<

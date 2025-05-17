@@ -4,8 +4,8 @@ import authenticateToken from "@src/middleware/authenticateToken";
 import restrictToSelf from "@src/middleware/restrictToSelf";
 import getProfile from "@src/controllers/userController/getProfile";
 import getAllUsers from "@src/controllers/userController/getAllUsers";
-import { updateEmail } from "@src/controllers/userController/updateUser";
 import updatePassword from "@src/controllers/userController/updatePassword";
+import updateEmail from "@src/controllers/userController/updateEmail";
 import verifyUser from "@src/controllers/userController/verifyUser";
 import { Role } from "@src/enums/authentication";
 
