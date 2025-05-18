@@ -31,9 +31,10 @@ interface RefreshTokenResponseData {
   refreshToken: string;
 }
 
-type UpdateEmailError = {
+// Change email error
+type RequestEmailChangeError = {
+  password?: string;
   email?: string;
-  currentPassword?: string;
 };
 
 type UpdatePasswordError = {
@@ -60,7 +61,7 @@ export {
   LoginResponseData,
   RegisterResponseError,
   RefreshTokenResponseData,
-  UpdateEmailError,
+  RequestEmailChangeError,
   UpdatePasswordError,
   VerifyUserResponseData,
   RedirectParams,

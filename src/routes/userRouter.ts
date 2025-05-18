@@ -5,7 +5,9 @@ import restrictToSelf from "@src/middleware/restrictToSelf";
 import getProfile from "@src/controllers/userController/getProfile";
 import getAllUsers from "@src/controllers/userController/getAllUsers";
 import updatePassword from "@src/controllers/userController/updatePassword";
-import updateEmail from "@src/controllers/userController/updateEmail";
+import requestEmailChange from "@src/controllers/userController/requestEmailChange";
+import confirmEmailChange from "@src/controllers/userController/confirmEmailChange";
+
 import verifyUser from "@src/controllers/userController/verifyUser";
 import { Role } from "@src/enums/authentication";
 
@@ -33,11 +35,18 @@ userRouter.get(
   getProfile
 );
 
-userRouter.patch(
-  "/update-email",
+userRouter.post(
+  "/email/change-request",
   authenticateToken,
   authorizeRoles([Role.USER, Role.ADMIN]),
-  updateEmail
+  requestEmailChange
+);
+
+userRouter.post(
+  "/email/change-confirm",
+  authenticateToken,
+  authorizeRoles([Role.USER, Role.ADMIN]),
+  confirmEmailChange
 );
 
 userRouter.patch(

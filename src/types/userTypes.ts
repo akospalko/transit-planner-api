@@ -1,17 +1,6 @@
 import { Role } from "@prisma/client";
 
-export type UserUpdateEmailRequestBody = {
-  email: string;
-  currentPassword: string;
-};
-
-export type UserUpdatePasswordRequestBody = {
-  currentPassword: string;
-  newPassword: string;
-  newPasswordConfirm: string;
-};
-
-// Data
+// User
 export type QueriedUser = {
   id: number;
   username: string;
@@ -23,12 +12,33 @@ export type QueriedUser = {
   resetTokenExp?: Date | null;
   verifyEmailToken?: string | null;
   verifyEmailTokenExp?: Date | null;
+  emailChangeCode?: string | null;
+  pendingEmail?: string | null;
+  emailChangeExp?: Date | null;
   createdAt: Date;
   verifiedAt: Date | null;
 };
 
-export type QueriedUserUpdateEmail = Pick<QueriedUser, "password" | "email">;
+// Email change
+export type RequestEmailChangeRequestBody = {
+  email: string;
+  password: string;
+};
 
+export type ConfirmEmailChangeRequestBody = {
+  code: string;
+};
+
+export type QueriedUserRequestEmailChange = Pick<
+  QueriedUser,
+  "password" | "email"
+>;
+export type QueriedUserConfirmEmailChange = Pick<
+  QueriedUser,
+  "emailChangeCode" | "pendingEmail" | "emailChangeExp"
+>;
+
+// Update password
 // TODO Rename to QueriedUserUpdatePassword
 export type QueriedUserPassword = Pick<QueriedUser, "password">;
 
@@ -36,3 +46,9 @@ export type QueriedUserInsensitive = Pick<
   QueriedUser,
   "id" | "username" | "email" | "createdAt" | "verifiedAt"
 >;
+
+export type UserUpdatePasswordRequestBody = {
+  currentPassword: string;
+  newPassword: string;
+  newPasswordConfirm: string;
+};
