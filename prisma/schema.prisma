@@ -28,6 +28,9 @@ model User {
   resetTokenExp     DateTime? 
   verifyEmailToken    String?  
   verifyEmailTokenExp DateTime? 
+  pendingEmail           String?   @unique
+  emailChangeCode        String?
+  emailChangeExp     DateTime?
   createdAt     DateTime  @default(now())
   verifiedAt    DateTime?
   blacklistedTokens BlacklistedToken[]
