@@ -19,8 +19,8 @@ const requestEmailChange = errorHandlerMiddleware(
   async (req: AuthenticatedRequest, res: Response) => {
     const { password, email }: RequestEmailChangeRequestBody = req.body;
     const userId: number | undefined = req.user?.id;
-
     const errors: ErrorResponse<RequestEmailChangeError> = {};
+
     if (!userId) {
       errors.message = "Wrong user ID format.";
       return sendResponse(res, {
@@ -99,7 +99,9 @@ const requestEmailChange = errorHandlerMiddleware(
     }
 
     const code: string = crypto.randomInt(100000, 999999).toString(); // 6-digit code
-    const expiresAt: Date = new Date(Date.now() + 10 * 60 * 1000); // 10 minutes
+
+    const expiresInMinutes: number = 10;
+    const expiresAt: Date = new Date(Date.now() + expiresInMinutes * 60 * 1000); // 10 minutes
 
     await prisma.user.update({
       where: { id: userId },
@@ -118,7 +120,11 @@ const requestEmailChange = errorHandlerMiddleware(
 
     return sendResponse(res, {
       status: 200,
-      message: "Verification code sent to new email.",
+      message: `Verification code sent to ${email}`,
+      data: {
+        emailConfirmationRequired: true,
+        expiresInMinutes: expiresInMinutes,
+      },
     });
   }
 );
