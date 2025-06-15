@@ -8,12 +8,14 @@ import requestPasswordResetEmail from "@src/controllers/authenticationController
 import resetPassword from "@src/controllers/authenticationController/resetPassword";
 import verifyUserByEmail from "@src/controllers/authenticationController/verifyUserByEmail";
 import resetPasswordRedirectLink from "@src/controllers/authenticationController/resetPasswordRedirectLink";
+import googleTokenLogin from "@src/controllers/authenticationController/googleTokenLogin";
 
 const authenticationRouter: Router = Router();
 
 authenticationRouter.post("/register", register);
 authenticationRouter.post("/login", login);
-authenticationRouter.post("/logout", authenticateToken, logout);
+authenticationRouter.post("/google-token-login", googleTokenLogin);
+authenticationRouter.post("/logout", authenticateToken, logout); // TODO Revise and fix error
 authenticationRouter.post("/refresh-token", refreshToken);
 
 authenticationRouter.post("/forgot-password", requestPasswordResetEmail);
