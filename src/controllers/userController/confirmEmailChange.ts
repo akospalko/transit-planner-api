@@ -10,9 +10,9 @@ import { ErrorResponse } from "@tp-types/commonApiTypes";
 import { AuthenticatedRequest } from "@tp-types/authenticationTypes";
 
 const confirmEmailChange = errorHandlerMiddleware(
-  async (req: Request, res: Response) => {
+  async (req: AuthenticatedRequest, res: Response) => {
     const { code }: ConfirmEmailChangeRequestBody = req.body;
-    const userId = (req as AuthenticatedRequest).user?.id;
+    const userId: number | undefined = req.user?.id;
 
     const errors: ErrorResponse<null> = {};
 

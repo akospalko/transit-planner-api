@@ -15,7 +15,7 @@ const authenticationRouter: Router = Router();
 authenticationRouter.post("/register", register);
 authenticationRouter.post("/login", login);
 authenticationRouter.post("/google-token-login", googleTokenLogin);
-authenticationRouter.post("/logout", authenticateToken, logout); // TODO Revise and fix error
+authenticationRouter.post("/logout", authenticateToken, logout);
 authenticationRouter.post("/refresh-token", refreshToken);
 
 authenticationRouter.post("/forgot-password", requestPasswordResetEmail);

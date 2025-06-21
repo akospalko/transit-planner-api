@@ -11,9 +11,9 @@ import {
   JwtPayloadAccess,
 } from "@tp-types/authenticationTypes";
 
-const verifyUser = errorHandlerMiddleware(
-  async (req: Request, res: Response) => {
-    const { user }: AuthenticatedRequest = req;
+const verifyUser = errorHandlerMiddleware<AuthenticatedRequest>(
+  async (req, res) => {
+    const { user } = req;
 
     const errors: ErrorResponse<null> = {};
     if (!user) {
