@@ -1,21 +1,18 @@
-import { Response, NextFunction } from "express";
-import sendResponse from "@src/utility/responseHandler";
+import { Request, Response, NextFunction } from "express";
 import { AuthenticatedRequest } from "@tp-types/authenticationTypes";
-import { ErrorResponse } from "@tp-types/commonApiTypes";
 import { Role } from "@src/enums/authentication";
+import sendResponse from "@src/utility/responseHandler";
 
 const authorizeRoles = (allowedRoles: Role[]) => {
-  return (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
-    const userRoles: Role[] = req.user?.roles || [];
-
-    const errors: ErrorResponse<null> = {};
+  return (req: Request, res: Response, next: NextFunction) => {
+    const { user } = req as AuthenticatedRequest;
+    const userRoles: Role[] = user?.roles || [];
 
     if (!userRoles.some((role) => allowedRoles.includes(role))) {
-      errors.message = "Access denied: insufficient permissions";
-      return sendResponse<null, null>(res, {
+      return sendResponse(res, {
         status: 403,
         message: "Authorization error",
-        error: errors,
+        error: { message: "Access denied: insufficient permissions" },
       });
     }
 
